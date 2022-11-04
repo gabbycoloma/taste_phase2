@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&family=PT+Sans&display=swap');
+      </style>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../script.js"></script>
+    <!-- Bootstrap CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="images/logo/logo2.png" type="image/icon type">
+    
+    <title>Taste - Create Review</title>
+  </head>
+  <body>
+  
+ 
+     <!--HEADER--> 
+     <%- include('partials/header.ejs') %>
+
+    <div class="container mt-5">
+      <form>
+          <div class="mb-3">
+            <label for="restaurant" class="form-label"><h3 class="form-heading">Restaurant / Brand of Product</h3></label>
+            <input type="text" class="form-control" id="inputRestaurant" aria-describedby="emailHelp">
+            <div id="restaurantHelp" class="form-text">Input the restaurant or brand of product you want to review</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="restaurant" class="form-label"><h5 class="form-heading">Food/Product Name</h5></label>
+            <input type="text" class="form-control" id="inputRestaurant" aria-describedby="emailHelp">  
+          </div>
+
+          <div class="mb-3">
+            <label for="date" class="form-label"><h5 class="form-heading">Date dined at restaurant / tried product</h5></label>
+            <input type="date" class="form-control" id="inputDate">
+          </div>
+
+          <div class="mb-3">
+            <label for="date" class="form-label"><h5 class="form-heading">Select your rating</h5></label>
+            <div class="mb-1">
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+            </div>
+
+          </div>
+
+          <div class="mb-3">
+            <label for="formFile" class="form-label"><h5 class="form-heading">Attatch an image</h5></label>
+            <input class="form-control" type="file" id="formFile">
+          </div>
+          
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label"><h5 class="form-heading">What can you say?</h5></label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="This place is great! Atmosphere is chill and cool but the staff is also really friendly. They know what they’re doing and what they’re talking about, and you can tell making the customers happy is their main priority. Food is pretty good, some italian classics and some twists, and for their prices it’s 100% worth it."></textarea>
+          </div>
+          <button type="submit" class="btn btn-danger" id="submit-button">Submit Review</button>
+
+      </form>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>  
+  </body>
+</html>

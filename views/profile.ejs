@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700;800&family=PT+Sans&display=swap');
+      </style>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../script.js"></script>
+    <!-- Bootstrap CSS -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="view.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="images/logo/logo2.png" type="image/icon type">
+    
+    <title>Taste - Louis Coloma
+    </title>
+  </head>
+  <body>
+ 
+    <div class="container-xxl">
+      <!--HEADER--> 
+      <%- include('partials/header.ejs') %>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+            <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script> 
+
+      <div id="profile-upper">
+        <div id="profile-banner-image">
+          <img class="upperimg" src="images/view/grey.png" alt="Banner image">
+        </div>
+        <div id="profile-d">
+          <div id="profile-pic">
+            <img src="images/aboutus/Coloma.jpg">
+          </div>
+          <div id="u-name">Louis Coloma</div>
+          <div class="tb" id="m-btns">
+              <div class="m-btn"><span data-toggle="modal" data-target="#edit-profile">Edit Profile</span> </div>
+          </div>
+        </div>
+        <div id="black-grd"></div>
+      </div>
+      <div id="main-content">
+        <div class="tb">
+          <div class="td" id="l-col">
+            <div class="l-cnt">
+              <div class="cnt-label">
+                <i class="l-i" id="l-i-i"></i>
+                <span>Intro</span>
+                <div class="lb-action"><div id="penicon"><img src="images/view/penedit.png"></div></div>
+              </div>
+              <div id="i-box">
+                <div id="intro-line">Ang Pogi Ko</div>
+                <div id="u-occ">Birthday</div>
+                <div id="u-loc">Lives in Manila</div>
+              </div>
+            </div>
+            
+           
+            <div id="t-box">
+              <div id="cpy-nt">Taste &copy; <span id="curr-year">2022</span></div>
+            </div>
+          </div>
+          <div class="td" id="m-col">
+            <div class="m-mrg" id="p-tabs">
+              <div class="tb">
+                <div class="td">
+                  <div class="tb" id="p-tabs-m">
+                    <div class="td"><span>ABOUT</span></div>
+                    <div class="td active"><span>TIMELINE</span></div>
+                    <div class="td"><span data-toggle="modal" data-target="#friend-list">FRIENDS</span></div>
+                  
+                  </div>
+                </div>
+               
+              </div>
+            </div>
+            
+            <div class="container">
+
+              <!--POST 1-->
+              <div class="row mt-5 mb-5">
+                <div class="col">       
+                  <div class="card" style="width: 100%;">
+                    <div class="card-header" id="card-header">
+                      <div class="header-account">
+                        <a href="view.html"><img src="images/aboutus/Coloma.jpg" alt="defaultDP"  class="rounded-circle img-DP large-dp d-inline-block" style="height : 50px; width: 50px;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
+                          
+                            <h5 class="username-mainheader d-inline-block">lgc.gabby</h5> 
+                            <div class="info-header">
+                              <h6 id="date">September 10, 2021</h6>
+                           </div>
+                      </div>
+                    </div>
+                    <a href="post-1.html" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="images/carousel/carousel_1.jpg" alt="Card image cap"></a>
+                    <div class="card-body" id="card-body-home">
+                      <a href="post-1.html"><h5 class="card-title" data-bs-placement="left" title="View Post">Pho Hoa</h5></a>
+                      <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">Pho - Vegetable Noodle Soup</h6>
+                      <div class="stars">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                      </div>
+                      <p class="card-text" style="margin-top: 10px;">This is my first time having Pho. First thing I liked about Pho was the soup. It was light on the stomach and the broth was tasty.The noodles were thin and wide, and soaked up the soup which also made it very tasty. Overall, my first impression of Pho is good.</p>
+                      <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
+                      <small class="text-muted">12</small>
+                    </div>
+                    <div class="card-footer">
+        
+                      <small class="text-muted">1 comment</small>
+                      <hr>
+                      <div class="comment-footer">
+                        <h6 class="username-footer" id="username"><a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">eric.adren</a></h6> 
+                        <h6 id="comment">I quite liked the taste of Pho as well. But I wasnt a fan of the smell.</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Pop Up Modal for Friends List-->
+      <div class="modal fade" id="friend-list">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Friend List</h5>
+              <button type="button" class="close" data-dismiss="modal" >&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="friends">
+                <a href="profile-2.html">
+                <div class="friend-avatar"><img class="friend-dp" src="images/view/Friends/eric-hoag.jpg" alt="friend-img"></div>
+                <span class="friend-name">Eric Adren</span>
+                </a>
+              </div>
+              <div class="friends">
+                <span class="friend-avatar"><img class="friend-dp" src="images/view/Friends/jaylen-maxim.jpg" alt="friend-img"></span>
+                <span class="friend-name">James Ho</span>
+              </div>
+              <div class="friends">
+                <span class="friend-avatar"><img class="friend-dp" src="images/view/Friends/spencer-ngo.jpg" alt="friend-img"></span>
+                <span class="friend-name">Mary Lee</span>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Pop Up Modal for Edit Profile-->
+      <div class="modal fade" id="edit-profile">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Profile</h5>
+              <button type="button" class="close" data-dismiss="modal" >&times;</button>
+            </div>
+            <div class="modal-body">
+              <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+    <div class="row flex-lg-nowrap">
+    
+      <div class="col">
+        <div class="row">
+          <div class="col mb-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="e-profile">
+                  <div class="row">
+                      <div class="col-12 col-sm-auto mb-3">
+                        <div class="mx-auto" style="width: 140px;">
+                          <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                            <img class="d-flex justify-content-center align-items-center rounded"style="height: 140px; width:140px; object-fit: cover;" src="images/aboutus/Coloma.jpg" alt="Louis Pic">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                        <div class="text-center text-sm-left mb-2 mb-sm-0">
+                          <h5 class="pt-sm-2 pb-1 mb-0 text-nowrap">Louis Coloma</h5>
+                          <p class="mb-0">@lgc.gabby</p>
+                        
+                          <div class="mt-2">
+                            <button class="btn btn-primary" type="button">
+                              <i class="fa fa-fw fa-camera"></i>
+                              <span>Change Photo</span>
+                            </button>
+                          </div>
+                        </div> 
+                      </div>
+                  </div>
+                  <div class="tab-content pt-3">
+                    <div class="tab-pane active">
+                      <form class="form" novalidate="">
+                        <div class="row">
+                          <div class="col">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Full Name</label>
+                                  <input class="form-control" type="text" name="name" placeholder="Louis Coloma" value="Louis Coloma">
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Username</label>
+                                  <input class="form-control" type="text" name="username" placeholder="lgc.gabby" value="lgc.gabby">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Email</label>
+                                  <input class="form-control" type="text" placeholder="gabby.coloma@gmail.com">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col mb-3">
+                                <div class="form-group">
+                                  <label>About</label>
+                                  <textarea class="form-control" rows="5" placeholder="My Bio"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12 col-sm-6 mb-3">
+                            <div class="mb-3"><h5>Change Password</h5></div>
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Current Password</label>
+                                  <input class="form-control" type="password" placeholder="••••••">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>New Password</label>
+                                  <input class="form-control" type="password" placeholder="••••••">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
+                                  <input class="form-control" type="password" placeholder="••••••"></div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </form>
+    
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+    </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary d-inline-block" data-dismiss="modal">Close</button> <button class="btn btn-primary d-inline-block" type="submit">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

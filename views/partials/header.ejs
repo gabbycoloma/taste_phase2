@@ -1,24 +1,24 @@
 <header>
   <nav class="navbar sticky-top navbar-expand-lg" id="navbar">
-    <a href="landingpage.html" class="navbar-brand mb-0 ml-5 mt-0">
+    <a href="/" class="navbar-brand mb-0 ml-5 mt-0">
       <img class="d-inline-block align-center mb-1" src="../../images/logo/logo.png" height="35" width="35" alt="taste-logo">
       <span class="logo-text">taste</span></a>
-      <form class="form-inline my-2 my-lg-0 ml-3">
+      <form class="form-inline my-2 my-lg-0 ml-3" action="/search">
         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-light" type="submit"><iconify-icon inline icon="il:search"></iconify-icon></iconify-icon></button>
       </form>
   
       <ul class="navbar-nav mx-auto">
-        <li class="nav-item active mt-2  ml-5">
-          <a class="nav-link active" href="#" id="active-link" >Home<span class="sr-only">(current)</span></a>
+        <li class="nav-item mt-2  ml-5">
+          <a class="nav-link " href="/" aria-current="page">Home<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item dropdown mt-2 ml-2" id="browse-dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Review
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="createreview.html">Create Review</a>
-            <a class="dropdown-item" href="editreview.html">Edit Review</a>
+            <a class="dropdown-item" href="/createreview">Create Review</a>
+            <a class="dropdown-item" href="/editreview">Edit Review</a>
           </div>
         </li>
       </ul>
@@ -28,8 +28,9 @@
             <img src="../../images/aboutus/Coloma.jpg" alt="defaultDP"  class="img-DP white-border" class="">
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="view.html">View Profile</a>
-            <a class="dropdown-item" href="landingpage.html">Log Out</a>
+            <h6 class="dropdown-header">@username</h6>
+            <a class="dropdown-item" href="/profile">View Profile</a>
+            <a class="dropdown-item" href="/landingpage">Log Out</a>
           </div>
         </li>
     </ul>

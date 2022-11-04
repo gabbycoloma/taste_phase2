@@ -16,6 +16,37 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
+app.get('/createreview', function(req, res) {
+  res.render('createreview');
+});
+
+app.get('/editreview', function(req, res) {
+  res.render('editreview');
+});
+
+app.get('/profile', function(req, res) {
+  res.render('profile');
+});
+
+app.get('/landingpage', function(req, res) {
+  res.render('landingpage');
+});
+
+app.get('/loginsignup', function(req, res) {
+  res.render('loginsignup');
+});
+
+app.get('/aboutus', function(req, res) {
+  res.render('aboutus');
+});
+
+app.get('/search', function(req, res) {
+  res.render('searchresults');
+});
+
+
+
+
 
 
 
