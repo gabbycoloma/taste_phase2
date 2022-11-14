@@ -1,8 +1,12 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 const ejs = require('ejs');
+const mongoose = require("mongoose"); // mongodb 
 
 const app = express();
+
+// connect to database
+mongoose.connect("mongodb://localhost:27017/tasteDB", {useNewUrlParser: true}); //tasteDB name of the Database
 
 app.use(express.static("public"));
 app.use(express.static(__dirname));
@@ -11,6 +15,15 @@ app.use(express.urlencoded({extended: true}));
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
+
+const userSchema = { 
+  // user attributes like username, last and first name, posts
+};
+
+const posts = {
+  // posts attributes i.e. title, subtitle, date, image, post text, etc
+};
+
 
 app.get('/', function(req, res) {
   res.render('index');
