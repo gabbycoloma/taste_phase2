@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&family=PT+Sans&display=swap');
-      </style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&family=PT+Sans&display=swap');
+    </style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,301 +14,97 @@
 
     <script type="text/javascript" src="../script.js"></script>
     <!-- Bootstrap CSS -->
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="../images/logo/logo2.png" type="image/icon type">
-    
+
     <title>Taste - Home</title>
-  </head>
-  <body>
- 
+</head>
+
+<body>
+
     <form action="/"></form>
-    <!--HEADER--> 
+    <!--HEADER-->
     <%- include('partials/header.ejs') %>
-    <div class="container">
-      
-     
-      
-      <!--POST 1-->
-      <div class="row mt-5 mb-5">
-        <div class="col">       
-          <div class="card" style="width: 40rem;">
-            <div class="card-header" id="card-header">
-              <div class="header-account">
-                <a href="view.html"><img src="images/aboutus/Coloma.jpg" alt="defaultDP"  class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
-                  <div class="info-header">
-                    <h6 class="username-mainheader"><a href="view.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">lgc.gabby</a></h6> 
-                    <h6 id="date">September 10, 2021</h6>
-                  </div>
-              </div>
-            </div>
-            <a href="post-1.html" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="images/carousel/carousel_1.jpg" alt="Card image cap"></a>
-            <div class="card-body" id="card-body-home">
-              <a href="post-1.html"><h5 class="card-title" data-bs-placement="left" title="View Post">Pho Hoa</h5></a>
-              <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">Pho - Vegetable Noodle Soup</h6>
-              <div class="stars">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-              </div>
-              <p class="card-text" style="margin-top: 10px;">This is my first time having Pho. First thing I liked about Pho was the soup. It was light on the stomach and the broth was tasty.The noodles were thin and wide, and soaked up the soup which also made it very tasty. Overall, my first impression of Pho is good.</p>
-              <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
-              <small class="text-muted">12</small>
-            </div>
-            <div class="card-footer">
+        <div class="container">
 
-              <small class="text-muted">1 comment</small>
-              <hr>
-              <div class="comment-footer">
-                <h6 class="username-footer" id="username"><a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">eric.adren</a></h6> 
-                <h6 id="comment">I quite liked the taste of Pho as well. But I wasnt a fan of the smell.</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
 
-    <!--POST 2-->
-    <div class="row mt-5 mb-5">
-      <div class="col">       
-        <div class="card" style="width: 40rem;">
-          <div class="card-header" id="card-header">
-            <div class="header-account">
-              <a href="profile-2.html"><img src="images/home/eric-hoag.jpg" alt="defaultDP"  class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
-              
-                <div class="info-header">
-                  <h6 class="username-mainheader"><a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">eric.adren</a></h6> 
-                  <h6 id="date">October 19, 2020</h6>
+
+            <!--POST 1-->
+            <% posts.forEach(function (user) {   %>
+                <div class="row mt-5 mb-5">
+                    <div class="col">
+                        <div class="card" style="width: 40rem;">
+                            <div class="card-header" id="card-header">
+                                <div class="header-account">
+                                    <a href="view.html"><img src="images/aboutus/<%= posts.image_post %>" alt="defaultDP" class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
+                                    <div class="info-header">
+                                        <h6 class="username-mainheader">
+                                            <a href="view.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">
+                                                <%= posts.username %>
+                                            </a>
+                                        </h6>
+                                        <h6 id="date">
+                                            <%= posts.date %>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="post-1.html" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="images/carousel/carousel_1.jpg" alt="Card image cap"></a>
+                            <div class="card-body" id="card-body-home">
+                                <a href="post-1.html">
+                                    <h5 class="card-title" data-bs-placement="left" title="View Post">
+                                        <%= posts.restaurant_name %>
+                                    </h5>
+                                </a>
+                                <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">
+                                    <%= posts.food_name %>
+                                </h6>
+                                <div class="stars">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                </div>
+                                <p class="card-text" style="margin-top: 10px;">
+                                    <%= posts.review %>
+                                </p>
+                                <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
+                                <small class="text-muted"><%= posts.likes %></small>
+                            </div>
+                            <div class="card-footer">
+
+                                <small class="text-muted">1 comment</small>
+                                <hr>
+                                <div class="comment-footer">
+                                    <h6 class="username-footer" id="username"><a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">eric.adren</a></h6>
+                                    <h6 id="comment">I quite liked the taste of Pho as well. But I wasnt a fan of the smell.</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-          </div>
-          <a href="post-2.html" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="images/home/buger-shakeshack.jpg" alt="Card image cap"></a>
-          <div class="card-body" id="card-body-home">
-            <a href="post-2.html"><h5 class="card-title" data-bs-placement="left" title="View Post">Shake Shack</h5></a>
-            <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">ShackBurger</h6>
-            <div class="stars">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-            </div>
-            <p class="card-text" style="margin-top: 10px;">Ever since I went to the U.S. I have been a fan of Shake Shack and have longed to eat a burger from Shake Shack here in the Philippines. Now that there is one in Megamall, I tried the ShackBurger, which is just a simple quarter-pounder cheeseburger with some lettuce and tomato. It was amazing. I was a bit nervous since I first thought the quality might drop but it did not disappoint me at all. I would give this a 10/5 stars if I could.</p>
-            <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
-            <small class="text-muted">19</small>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">2 comments <hr></small>
-            <div class="comment-footer">
-              <h6 class="username-footer" id="username"><a href="view.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">lgc.gabby</a></h6> 
-              <h6 id="comment">I disagree with this review. Don't get me wrong, it was good but I would not buy a burger from Shake Shack for PHP 250.</h6>
-            </div>
-            <div class="comment-footer">
-              <h6 class="username-footer" id="username"><a href="profile-3.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">andrea.banana</a></h6> 
-              <h6 id="comment">OMG me too! I loved the burger there, you should try their cheesy fries as well! You won't regret it!</h6>
-            </div>
-
-          </div>
-        </div>
-      </div>
-  </div>
-
-  <!--POST 3-->
-  <div class="row mt-5 mb-5">
-    <div class="col">       
-      <div class="card" style="width: 40rem;">
-        <div class="card-header" id="card-header">
-          <div class="header-account">
-            <a href="profile-3.html"><img src="images/home/andrea-white.jpg" alt="defaultDP"  class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
-            
-              <div class="info-header">
-                <h6 class="username-mainheader"><a href="profile-3.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">andrea.banana</a></h6> 
-                <h6 id="date">January 25, 2021</h6>
-              </div>
-          </div>
-        </div>
-        <a href="post-3.html" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="images/home/burger-mcdonalds.jpg" alt="Card image cap"></a>
-        <div class="card-body" id="card-body-home">
-          <a href="#"><h5 class="card-title" data-bs-placement="left" title="View Post">McDonalds - Double Cheeseburger Review</h5></a>
-          <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">Double Cheeseburger Meal</h6>
-          <div class="stars">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-          </div>
-          <p class="card-text" style="margin-top: 10px;">McDonalds always offers affordable food prices. However, everytime I eat here the food just doesn't taste that good. I guess it's called fast food for a reason. I ordered the 2 Double Cheese Burger, one of them came with drinks. The drinks were fine but the burger was moist and almost even soggy. I didn't get to finish the second burger since the burger was very heavy on the stomach.</p>
-          <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
-          <small class="text-muted">30</small>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">1 comment<hr></small>
-          <div class="comment-footer">
-            <h6 class="username-footer" id="username"><a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">eric.adren</a></h6> 
-            <h6 id="comment">Yeah don't really expect much coming from McDonalds. It really is just fast food. Shake Shack is the way for good burger</h6>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<!--POST 4-->
-  <div class="row mt-5 mb-5">
-    <div class="col">       
-      <div class="card" style="width: 40rem;">
-        <div class="card-header" id="card-header">
-          <div class="header-account">
-            <a href="post-4.html"><img src="images/home/jaylen-maxim.jpg" alt="defaultDP"  class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
-            
-              <div class="info-header">
-                <h6 class="username-mainheader"><a href="profile-4.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">jaylen.max</a></h6> 
-                <h6 id="date">February 10, 2021</h6>
-              </div>
-          </div>
-        </div>
-        <a href="post-4.html" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="images/home/chicken-frankies.jpg" alt="Card image cap"></a>
-        <div class="card-body" id="card-body-home">
-          <a href="post-4.html"><h5 class="card-title" data-bs-placement="left" title="View Post">Frankies</h5></a>
-          <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">Buffalo Wings</h6>
-          <div class="stars">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-          </div>
-          <p class="card-text" style="margin-top: 10px;">I ate some wings in Frankie’s with my friends and it was so good. Sobrang nasarapan kami sa wings that we ordered 12pcs more kasi nakulangan kami sa order namin. Tho I wish it was boneless, para di mahirap kainin.</p>
-          <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
-          <small class="text-muted">30</small>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">3 comments<hr></small>
-          <div class="comment-footer">
-            <h6 class="username-footer" id="username"><a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">eric.adren</a></h6> 
-            <h6 id="comment">I super agree with you dude. I wish the wings were boneless.</h6>
-          </div>
-          <div class="comment-footer">
-            <h6 class="username-footer" id="username"><a href="profile-6.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">spencerngo</a></h6> 
-            <h6 id="comment">There’s actually a boneless wings option in the menu!  Order that next time you eat there </h6>
-          </div>
-          <div class="comment-footer">
-            <h6 class="username-footer" id="username"><a href="view.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">lgc.gabby</a></h6> 
-            <h6 id="comment">I like the buffalo wings as well but I still find it quite expensive. Imma go for 24 Chicken instead. The serving there is larger too.</h6>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!--POST 5-->
-  <div class="row mt-5 mb-5">
-    <div class="col">       
-      <div class="card" style="width: 40rem;">
-        <div class="card-header" id="card-header">
-          <div class="header-account">
-            <a href="post-5.html"><img src="images/home/spencer-ngo.jpg" alt="defaultDP"  class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
-            
-              <div class="info-header">
-                <h6 class="username-mainheader"><a href="profile-5.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">tenzedzombie</a></h6> 
-                <h6 id="date">October 2, 2021</h6>
-              </div>
-          </div>
-        </div>
-        <a href="post-5.html" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="images/home/pizza-italianis.jpg" alt="Card image cap"></a>
-        <div class="card-body" id="card-body-home">
-          <a href="post-5.html"><h5 class="card-title" data-bs-placement="left" title="View Post">Italiannis</h5></a>
-          <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">Shrimp Garlic and Olive Pizza</h6>
-          <div class="stars">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-          </div>
-          <p class="card-text" style="margin-top: 10px;">I have never been a fan of pizza because all the pizza’s I have tasted were either too heavy on the stomach or just really greasy. But the Pizza here in Italiannis is very thin and light. Moreover, the garlic and olive really complement the shrimp. All in all, great pizza, highly recommended for people who want to get something light.</p>
-          <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
-          <small class="text-muted">30</small>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">2 comments<hr></small>
-          <div class="comment-footer">
-            <h6 class="username-footer" id="username"><a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">andrea.banana</a></h6> 
-            <h6 id="comment">Loved your review! Professional and straight to the point.</h6>
-          </div>
-          <div class="comment-footer">
-            <h6 class="username-footer" id="username"><a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">jaylen.max</a></h6> 
-            <h6 id="comment">You should try their pasta as well dude! Sobrang sarap tas may discount pa on Saturdays with BDO credit card so super sulit </h6>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!--POST 6-->
-  <div class="row mt-5 mb-5">
-    <div class="col">       
-      <div class="card" style="width: 40rem;">
-        <div class="card-header" id="card-header">
-          <div class="header-account">
-            <a href="post-6.html"><img src="images/home/jake-whiteaker.jpg" alt="defaultDP"  class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
-            
-              <div class="info-header">
-                <h6 class="username-mainheader"><a href="profile-6.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">el.diablo</a></h6> 
-                <h6 id="date">October 2, 2021</h6>
-              </div>
-          </div>
-        </div>
-        <a href="post-6.html" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="images/home/salad-saladstop.jpg" alt="Card image cap"></a>
-        <div class="card-body" id="card-body-home">
-          <a href="post-6.html"><h5 class="card-title" data-bs-placement="left" title="View Post">Salad Stop</h5></a>
-          <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">Caesar Salad</h6>
-          <div class="stars">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-          </div>
-          <p class="card-text" style="margin-top: 10px;">I was looking for something light to eat and I came across Salad Stop and ordered the usual Caesar salad. It was really good. The dressing was really good and you could really tell the lettuce and other vegetables were fresh. It is a bit pricey though.</p>
-          <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
-          <small class="text-muted">30</small>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">3 comments<hr></small>
-          <div class="comment-footer">
-            <h6 class="username-footer" id="username"><a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">tenzedzombie</a></h6> 
-            <h6 id="comment">Wow I didn’t know you had an account on Taste.I wanna see more reviews from you, el diablo.</h6>
-          </div>
-          <div class="comment-footer">
-            <h6 class="username-footer" id="username"><a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">jaylen.max</a></h6> 
-            <h6 id="comment">You should try their pasta as well dude! Sobrang sarap tas may discount pa on Saturdays with BDO credit card so super sulit </h6>
-          </div>
-          <div class="comment-footer">
-            <h6 class="username-footer" id="username"><a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">lgc.gabby</a></h6> 
-            <h6 id="comment">It is pricey but in my opinion, it is worth the money since the serving is quite large for one person.</h6>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
-    </div>
-    <script>
-      $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-    </script>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>  
-  </body>
+
+                <%});%>
+
+
+        </div>
+        <script>
+            $(function() {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
+</body>
+
 </html>
