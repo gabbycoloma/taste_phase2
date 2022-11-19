@@ -4,6 +4,18 @@ const ejs = require('ejs');
 const mongoose = require('mongoose');
 
 
+const app = express();
+
+app.use(express.static("public"));
+app.use(express.static(__dirname));
+app.use(bodyparser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
+
+
+
 mongoose.connect("mongodb://localhost:27017/taste", { useNewUrlParser: true }, (err) => {
     if (!err) console.log('DB is connected');
     else console.log('DB Error');
@@ -33,15 +45,9 @@ const user = mongoose.model("users", schema);
 
 const posts = mongoose.model("posts", schema_posts);
 
-const app = express();
 
-app.use(express.static("public"));
-app.use(express.static(__dirname));
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(express.urlencoded({ extended: true }));
-
-// set the view engine to ejs
-app.set('view engine', 'ejs');
+const reviewRoute = require("./routes/Review");
+app.use('/review', reviewRoute);
 
 app.get('/', function(req, res) {
     posts.find({}, function(err, rows) {
@@ -52,13 +58,7 @@ app.get('/', function(req, res) {
         }
     });
 });
-
-app.get('/createreview', function(req, res) {
-    res.render('createreview');
-
-});
-
-app.post('/addreview', function(req, res) {
+app.post('/review/create/add', function(req, res) {
     const newPost = posts({
         date: req.body.date,
         post_image: req.body.post_image,
@@ -79,9 +79,6 @@ app.post('/addreview', function(req, res) {
 
 });
 
-app.get('/editreview', function(req, res) {
-    res.render('editreview');
-});
 
 app.get('/profile', function(req, res) {
     res.render('profile');
