@@ -29,12 +29,14 @@
     <!--HEADER-->
     <%- include('partials/header.ejs') %>
         <div class="container">
-<<<<<<< Updated upstream
+
+            <% posts.forEach(function (posts) {   %>
 
 
 
-            <!--POST 1-->
-            <% posts.forEach(function (user) {   %>
+
+
+
                 <div class="row mt-5 mb-5">
                     <div class="col">
                         <div class="card" style="width: 40rem;">
@@ -77,54 +79,6 @@
                                 <small class="text-muted"><%= posts.likes %></small>
                             </div>
                             <div class="card-footer">
-
-=======
-            <!--POST 1-->
-            <% posts.forEach(function (user) {   %>
-                <div class="row mt-5 mb-5">
-                    <div class="col">
-                        <div class="card" style="width: 40rem;">
-                            <div class="card-header" id="card-header">
-                                <div class="header-account">
-                                    <a href="view.html"><img src="images/aboutus/<%= posts.image_post %>" alt="defaultDP" class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
-                                    <div class="info-header">
-                                        <h6 class="username-mainheader">
-                                            <a href="view.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">
-                                                <%= posts.username %>
-                                            </a>
-                                        </h6>
-                                        <h6 id="date">
-                                            <%= posts.date %>
-                                        </h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="post-1.html" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="images/carousel/carousel_1.jpg" alt="Card image cap"></a>
-                            <div class="card-body" id="card-body-home">
-                                <a href="post-1.html">
-                                    <h5 class="card-title" data-bs-placement="left" title="View Post">
-                                        <%= posts.restaurant_name %>
-                                    </h5>
-                                </a>
-                                <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">
-                                    <%= posts.food_name %>
-                                </h6>
-                                <div class="stars">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                </div>
-                                <p class="card-text" style="margin-top: 10px;">
-                                    <%= posts.review %>
-                                </p>
-                                <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
-                                <small class="text-muted"><%= posts.likes %></small>
-                            </div>
-                            <div class="card-footer">
-
->>>>>>> Stashed changes
                                 <small class="text-muted">1 comment</small>
                                 <hr>
                                 <div class="comment-footer">
@@ -135,8 +89,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
                 <%});%>
 
