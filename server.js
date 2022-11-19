@@ -55,6 +55,7 @@ app.get('/', function(req, res) {
 
 app.get('/createreview', function(req, res) {
     res.render('createreview');
+<<<<<<< Updated upstream
 });
 
 app.post('/addreview', function(req, res) {
@@ -75,6 +76,8 @@ app.post('/addreview', function(req, res) {
             console.log("added to db");
         }
     })
+=======
+>>>>>>> Stashed changes
 });
 
 app.get('/editreview', function(req, res) {
