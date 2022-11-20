@@ -36,17 +36,17 @@ const schema_posts = {
     image_post: String,
     food_name: String,
     restaurant_name: String,
-    stars: Number,
+    rating: Number,
     review: String,
     likes: Number
 };
 
 const user = mongoose.model("users", schema);
-
 const posts = mongoose.model("posts", schema_posts);
 
 
 const reviewRoute = require("./routes/Review");
+const { post } = require('./routes/Review');
 app.use('/review', reviewRoute);
 
 app.get('/', function(req, res) {
@@ -58,26 +58,83 @@ app.get('/', function(req, res) {
         }
     });
 });
+
 app.post('/review/create/add', function(req, res) {
     const newPost = posts({
-        date: req.body.date,
-        post_image: req.body.post_image,
-        food_name: req.body.food_name,
         restaurant_name: req.body.restaurant_name,
+        food_name: req.body.food_name,
+        date: req.body.date,
+        rating: req.body.rating,
+        //post_image: req.body.post_image,
         review: req.body.review
     });
 
     // CREATE - adding records to the DB
-    newPost.save(function(err) {
+    newPost.save(function(err, docs) {
         if (err) {
             console.log(err);
         } else {
             res.redirect("/");
+            console.log("Updated Docs : ", docs);
             console.log("added to db");
         }
     })
 
 });
+
+app.get('/review/edit', function(req, res) {
+    posts.find({ username: 'lgc.gabby' }, function(err, rows) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("vieweditreview", { posts: rows });
+        }
+    });
+})
+
+app.get('/review/edit/:posts_id', function(req, res) {
+    const posts_id = req.params.posts_id; //request the userId of the edited ID num
+    posts.find({ _id: posts_id }, function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("editreview", { posts: result[0] }); // returns the userId found 
+        }
+    });
+})
+
+app.post('/review/edit/update', function(req, res) {
+    const postID = req.body.id;
+    const query = { _id: postID };
+    const restaurant_name = req.body.restaurant_name;
+    const food_name = req.body.food_name;
+    const review = req.body.review;
+
+    console.log(postID);
+    console.log(restaurant_name);
+    posts.updateOne(query, { restaurant_name: restaurant_name, food_name: food_name, review: review }, function(err, docs) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Updated Docs : ", docs);
+            res.redirect("/");
+        }
+    });
+});
+
+
+
+
+app.get('/review/delete', function(req, res) {
+    posts.find({ username: 'lgc.gabby' }, function(err, rows) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("viewdeletereview", { posts: rows });
+        }
+    });
+});
+
 
 
 app.get('/profile', function(req, res) {
@@ -92,7 +149,7 @@ app.get('/loginsignup', function(req, res) {
     res.render('loginsignup');
 });
 
-app.get('/aboutus', function(req, res) {
+app.get('/about', function(req, res) {
     res.render('aboutus');
 });
 
