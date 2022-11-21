@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const server = require('../server');
-
-router.get("/create", (req, res) => {
-    res.render('createreview');
-})
+const UserModel = require('../models/UsersDB');
+const PostsModel = require('../models/PostsDB');
 
 
 
