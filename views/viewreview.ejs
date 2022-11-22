@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="/images/logo/logo2.png" type="image/icon type">
 
-    <title>Taste - Edit Review</title>
+    <title>Taste - View Review</title>
 </head>
 
 <body>
@@ -68,22 +68,25 @@
                 </p>
             </div>
             <hr class="hr-line">
+            <!-- Add comment -->
             <div class="mb-3 mt-5">
                 <h4 class="form-heading">1 Comment</h4>
 
             </div>
-
-
             <div>
                 <label for="restaurant" class="form-label"><h5 class="form-heading">Add a comment</h5></label>
             </div>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Comment..." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-danger" type="button">Comment</button>
+            <form action="/review/view/<%= PostsModel._id %>/comment" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Comment..." name="comment" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-danger" type="submit">Comment</button>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-4">
+            </form>
+
+            <!-- View comments -->
+            <div class="mb-5">
                 <div class="comment-viewpost">
                     <div class="picuser">
                         <h2 class="username-viewpost" id="username"><a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">eric.adren</a></h2>

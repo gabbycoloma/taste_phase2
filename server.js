@@ -31,7 +31,7 @@ mongoose.connect("mongodb://localhost:27017/taste", {
 
 const store = new MongoDBsession({
     uri: mongoURI,
-    collection: 'mySession',
+    collection: 'sessions',
 })
 
 app.use(session({
@@ -49,29 +49,16 @@ const isAuth = (req, res, next) => {
     }
 }
 
-
-//Database Initialization
-const UserModel = require('./models/UsersDB');
-const PostsModel = require('./models/PostsDB');
 app.use(function(req, res, next) {
     res.locals.session = req.session;
     next();
 });
-
-const isAuth = (req, res, next) => {
-    if (req.session.isAuth) {
-        next();
-    } else {
-        res.redirect('/login')
-    }
-}
 
 //Database Initialization
 const UserModel = require('./models/UsersDB');
 const PostsModel = require('./models/PostsDB');
 const CommentsModel = require('./models/CommentsDB');
 
-const posts = mongoose.model("posts", schema_posts);
 
 
 const reviewRoute = require("./routes/Review");
@@ -107,7 +94,6 @@ app.get('/review/view/:posts_id', function(req, res) {
 app.post('/review/view/:posts_id/comment', function(req, res) {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num
 
-    const comment = new CommentsModel
 
     res.send(req.body.comment);
 
@@ -242,66 +228,6 @@ app.post('/login', async(req, res) => {
     const { email, password } = req.body;
 
     let users = await UserModel.findOne({ email });
-    session.user_id = users._id;
-    session.username = users.username;
-    console.log(session.user_id);
-
-    if (!users) {
-        return res.redirect("/login");
-    }
-
-    const isMatch = await bcrypt.compare(password, users.password);
-
-    if (!isMatch) {
-        return res.redirect("/login");
-    }
-
-    req.session.isAuth = true
-    res.redirect("/");
-});
-
-//Sign Up User
-app.get('/signup', function(req, res) {
-    res.render('signup');
-});
-
-app.post('/signup', async(req, res) => {
-    const { firstname, lastname, username, email, password } = req.body;
-
-    let users = await UserModel.findOne({ email });
-
-    if (users) {
-        return res.redirect('/signup')
-    }
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPW = await bcrypt.hash(password, salt);
-    console.log(hashedPW);
-    users = new UserModel({
-        firstname,
-        lastname,
-        username,
-        email,
-        password: hashedPW,
-    });
-    console.log(req.body.email);
-    await users.save();
-
-    res.redirect('/login');
-
-});
-
-app.get('/logout', function(req, res) {
-    req.session.destroy((err) => {
-        if (err) throw err;
-
-        res.redirect("/landingpage");
-    })
-});
-
-app.post('/login', async(req, res) => {
-    const { email, password } = req.body;
-
-    let users = await UserModel.findOne({ email });
 
     if (!users) {
         return res.redirect("/login");
@@ -350,6 +276,14 @@ app.post('/signup', async(req, res) => {
 
     res.redirect('/login');
 
+});
+
+app.get('/logout', function(req, res) {
+    req.session.destroy((err) => {
+        if (err) throw err;
+
+        res.redirect("/landingpage");
+    })
 });
 
 app.get('/logout', function(req, res) {
