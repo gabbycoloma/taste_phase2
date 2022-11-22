@@ -27,10 +27,9 @@
 
     <form action="/"></form>
     <!--HEADER-->
-    <%- include('partials/header.ejs') %>
+    <%- include('./partials/header.ejs') %>
         <div class="container">
-
-            <% posts.forEach(function (posts) {   %>
+            <% PostsModel.forEach(function (PostsModel) {   %>
                 <div class="row mt-5 mb-5">
                     <div class="col">
                         <div class="card" style="width: 40rem;">

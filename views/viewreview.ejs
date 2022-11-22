@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&family=PT+Sans&display=swap');
+    </style>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../script.js"></script>
+    <!-- Bootstrap CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="/images/logo/logo2.png" type="image/icon type">
+
+    <title>Taste - Edit Review</title>
+</head>
+
+<body>
+
+    <!--HEADER-->
+    <%- include('partials/header.ejs') %>
+
+        <div class="container mt-5">
+            <div class="mb-3">
+                <div class="header-viewpost">
+                    <a href="view.html"><img src="images/aboutus/Coloma.jpg" alt="defaultDP" class="img-DP viewpost-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
+                    <h6 class="username-viewpost">
+                        <a href="view.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">
+                            <%= PostsModel.username %>
+                        </a>
+                    </h6>
+                </div>
+            </div>
+            <hr class="hr-line">
+            <div class="mb-1">
+                <label for="restaurant" class="form-label"><h2 class="form-heading"><%= PostsModel.restaurant_name %></h2></label>
+            </div>
+
+            <div class="mb-1">
+                <label for="restaurant" class="form-label"><h5><%= PostsModel.food_name %></h5></label>
+            </div>
+
+            <div class="mb-1">
+                <label for="date" class="form-label card-subtitle"><h6><%= PostsModel.date %></h6></label>
+            </div>
+
+            <div class="mb-3">
+                <label for="date" class="form-label"><h5 class="form-heading">Rating: <%= PostsModel.rating %></h5></label>
+            </div>
+            <hr class="hr-line">
+            <div class="mb-3">
+                <img src="/images/posts/<%= PostsModel.image_post %>" class="img-fluid img-viewpost border border-dark" alt="Responsive image">
+            </div>
+            <hr class="hr-line">
+            <div class="m-4">
+                <label for="date" class="form-label"><h5 class="form-heading">Review: </h5></label>
+                <p>
+                    <%= PostsModel.review %>
+                </p>
+            </div>
+            <hr class="hr-line">
+
+            <!-- Comments -->
+            <div class="mb-3 mt-5">
+                <h4 class="form-heading">1 Comment</h4>
+
+            </div>
+            <div>
+                <label for="addcomment" class="form-label"><h5 class="form-heading">Add a comment</h5></label>
+            </div>
+            <form action="/review/view/<%= PostsModel._id %>/comment" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Comment..." name="comment" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-danger" type="submit">Comment</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Display Comments -->
+            <div class="mb-4">
+                <div class="comment-viewpost">
+                    <div class="picuser">
+                        <h2 class="username-viewpost" id="username"><a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">eric.adren</a></h2>
+
+                    </div>
+                    <p style="margin-left: 12px">I quite liked the taste of Pho as well. But I wasnt a fan of the smell.</p>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
+</body>
+
+</html>

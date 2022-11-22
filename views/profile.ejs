@@ -19,8 +19,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="images/logo/logo2.png" type="image/icon type">
 
-    <title>Taste - Louis Coloma
-        <%# edit name %>
+    <title>Taste -
+        <%= UserModel.firstname %>
+            <%= UserModel.lastname %>
     </title>
 
 </head>
@@ -37,21 +38,22 @@
 
             <div id="profile-upper">
                 <div id="profile-banner-image">
-                    <img class="upperimg" src="images/view/grey.png" alt="Banner image">
-                    <%# edit name %>
+                    <img class="upperimg" src="/images/elements/background.jpg" alt="Banner image">
                 </div>
                 <div id="profile-d">
                     <div id="profile-pic">
-                        <img src="images/aboutus/Coloma.jpg">
+                        <img src="/images/profile/<%= UserModel.user_image %>">
                         <%# edit image src %>
                     </div>
-                    <div id="u-name">Louis Coloma</div>
-                    <%# edit name %>
-                        <div class="tb" id="m-btns">
-                            <div class="m-btn"><span data-toggle="modal" data-target="#edit-profile">Edit Profile</span> </div>
-                        </div>
+                    <div id="u-name">
+                        <%= UserModel.firstname %>
+                            <%= UserModel.lastname %>
+                    </div>
+                    <div class="tb" id="m-btns">
+                        <div class="m-btn"><span data-toggle="modal" data-target="#edit-profile">Edit Profile</span> </div>
+                    </div>
                 </div>
-                <div id="black-grd"></div>
+
             </div>
             <div id="main-content">
                 <div class="tb">
