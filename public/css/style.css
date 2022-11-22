@@ -514,7 +514,8 @@ hr.style-one {
 }
 
 #likes-text {
-    margin-left: 3px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .page-header {
@@ -528,7 +529,6 @@ hr.style-one {
 }
 
 .likes {
-    margin-right: 10px;
     margin-bottom: 10px;
 }
 
@@ -540,4 +540,9 @@ hr.style-one {
     font-weight: 800;
     font-size: 16px;
     line-height: 33px;
+}
+
+.bi {
+    height: 35px;
+    width: 35px;
 }
