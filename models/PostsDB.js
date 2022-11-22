@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 
 
 const postsSchema = {
+    username: { type: String, required: true, min: 8, max: 16 },
+    date: { type: Date, required: true },
+    image_post: { type: String, required: true },
+    food_name: { type: String, min: 1, max: 50, required: true },
+    restaurant_name: { type: String, min: 2, max: 50, required: true },
+    rating: { type: Number, required: true },
+    review: { type: String, min: 1, required: true },
+    likes: { type: Number, required: false, default: 0 }
     username: {
         type: String,
         required: true,

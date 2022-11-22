@@ -68,25 +68,21 @@
                 </p>
             </div>
             <hr class="hr-line">
-
-            <!-- Comments -->
             <div class="mb-3 mt-5">
                 <h4 class="form-heading">1 Comment</h4>
 
             </div>
-            <div>
-                <label for="addcomment" class="form-label"><h5 class="form-heading">Add a comment</h5></label>
-            </div>
-            <form action="/review/view/<%= PostsModel._id %>/comment" method="post">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Comment..." name="comment" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-danger" type="submit">Comment</button>
-                    </div>
-                </div>
-            </form>
 
-            <!-- Display Comments -->
+
+            <div>
+                <label for="restaurant" class="form-label"><h5 class="form-heading">Add a comment</h5></label>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Comment..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-danger" type="button">Comment</button>
+                </div>
+            </div>
             <div class="mb-4">
                 <div class="comment-viewpost">
                     <div class="picuser">

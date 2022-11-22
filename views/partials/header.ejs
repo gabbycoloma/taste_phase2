@@ -9,16 +9,17 @@
         </form>
 
         <ul class="navbar-nav mx-auto">
-            <li class="nav-item mt-2  ml-5">
+            <li class="nav-item mt-1  ml-5">
                 <a class="nav-link " href="/" aria-current="page">Home<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item dropdown mt-2 ml-2" id="browse-dropdown">
+            <li class="nav-item dropdown mt-1 ml-2" id="browse-dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Review
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="/review/create">Create Review</a>
                     <a class="dropdown-item" href="/review/edit">Edit Review</a>
+                    <a class="dropdown-item" href="/review/delete">Delete Review</a>
                 </div>
             </li>
         </ul>
@@ -35,7 +36,7 @@
                         <%= session.username %>
                     </h6>
                     <a class="dropdown-item" href="/profile">View Profile</a>
-                    <a class="dropdown-item" href="/landingpage">Log Out</a>
+                    <a class="dropdown-item" href="/logout">Log Out</a>
                 </div>
             </li>
         </ul>

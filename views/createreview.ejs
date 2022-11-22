@@ -18,9 +18,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="icon" href="images/logo/logo2.png" type="image/icon type">
+    <link rel="icon" href="/images/logo/logo2.png" type="image/icon type">
 
     <title>Taste - Create Review</title>
 </head>
@@ -30,43 +30,49 @@
     <%- include('partials/header.ejs') %>
 
         <div class="container mt-5">
-            <form action="/review/create/add" method="post">
+            <form action="/review/create/add" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="restaurant" class="form-label"><h3 class="form-heading">Restaurant / Brand of Product</h3></label>
-                    <input type="text" class="form-control" id="inputRestaurant" name="restaurant_name" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" id="inputRestaurant" name="restaurant_name" aria-describedby="emailHelp" required>
                     <div id="restaurantHelp" class="form-text">Input the restaurant or brand of product you want to review</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="restaurant" class="form-label"><h5 class="form-heading">Food/Product Name</h5></label>
-                    <input type="text" class="form-control" id="inputRestaurant" aria-describedby="emailHelp" name="food_name">
+                    <input type="text" class="form-control" id="inputRestaurant" aria-describedby="emailHelp" name="food_name" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="date" class="form-label"><h5 class="form-heading">Date dined at restaurant / tried product</h5></label>
-                    <input type="date" class="form-control" id="inputDate" name="date">
+                    <input type="date" class="form-control" id="inputDate" name="date" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="date" class="form-label"><h5 class="form-heading">Select your rating</h5></label>
-                    <div class="mb-1">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                    </div>
+                    <select class="form-select" name="rating" aria-label="Rating from 1 - 10 (1 - lowest, 10 - highest)" required>
+                        <option selected disabled>Rating from 1 - 10 (1 - lowest, 10 - highest)</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                      </select>
 
                 </div>
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label"><h5 class="form-heading">Attatch an image</h5></label>
-                    <input class="form-control" type="file" id="formFile" name="post_image">
+                    <input class="form-control" type="file" id="formFile" name="image_post" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label"><h5 class="form-heading">What can you say?</h5></label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="review" placeholder="This place is great! Atmosphere is chill and cool but the staff is also really friendly. They know what they’re doing and what they’re talking about, and you can tell making the customers happy is their main priority. Food is pretty good, some italian classics and some twists, and for their prices it’s 100% worth it."></textarea>
+                    <textarea class="form-control" required id="exampleFormControlTextarea1" rows="3" name="review" placeholder="This place is great! Atmosphere is chill and cool but the staff is also really friendly. They know what they’re doing and what they’re talking about, and you can tell making the customers happy is their main priority. Food is pretty good, some italian classics and some twists, and for their prices it’s 100% worth it."></textarea>
                 </div>
                 <button type="submit" class="btn btn-danger" id="submit-button">Submit Review</button>
 
