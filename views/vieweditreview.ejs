@@ -30,7 +30,11 @@
     <%- include('partials/header.ejs') %>
 
 
-        <div class="container mt-5">
+        <div class="container mt-5" style="width: 50rem;">
+            <div class="page-header mb-1">
+                <h1 class="page-header">Select posts to edit: </h1>
+            </div>
+            <hr class="hr-line mb-5">
             <% PostsModel.forEach(function (PostsModel) {   %>
                 <div class="card" style="width: 50rem;">
                     <div class="card-header" name>
@@ -49,7 +53,7 @@
                             <%= PostsModel.review %>
                         </p>
 
-                        <a href="/review/edit/<%= PostsModel._id %>"><button type="submit" class="btn btn-danger float-right" id="submit-button">Edit Review</button></a>
+                        <a href="/review/edit/<%= PostsModel._id %>"><button type="submit" class="btn btn-primary float-right" id="submit-button">Edit Review</button></a>
 
                     </div>
                 </div>

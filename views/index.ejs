@@ -30,46 +30,74 @@
     <%- include('./partials/header.ejs') %>
         <div class="container">
 
-            <% PostsModel.forEach(function (PostsModel) {   %>
+            <% posts.forEach(function (posts) {   %>
                 <div class="row mt-5 mb-5">
                     <div class="col">
                         <div class="card" style="width: 40rem;">
                             <div class="card-header" id="card-header">
                                 <div class="header-account">
-                                    <a href="view.html"><img src="/images/aboutus/Coloma.jpg" alt="defaultDP" class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
+                                    <a href="view.html"><img src="/images/profile/default.jpg" alt="defaultDP" class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
                                     <div class="info-header">
                                         <h6 class="username-mainheader">
                                             <a href="/profile" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">
-                                                <%= PostsModel.username %>
+                                                <%= posts.username %>
                                             </a>
                                         </h6>
                                         <h6 id="date">
-                                            <%= PostsModel.date %>
+                                            <%= posts.date.toLocaleDateString() %>
                                         </h6>
                                     </div>
                                 </div>
+                                <div class="ellipsis float-right">
+                                    <div class="dropdown">
+                                        <button class="ellipsis-dropdown" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
+                                            <iconify-icon inline icon="ion:ellipsis-horizontal-outline" width="25" height="25"></iconify-icon>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                            <a class="dropdown-item" href="/review/view/<%= posts._id %>">View Post</a>
+                                            <a class="dropdown-item" href="/">Report Post</a>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
                             </div>
-                            <a href="/review/view/<%= PostsModel._id %>" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="/images/posts/<%= PostsModel.image_post %>" alt="Card image cap"></a>
+                            <a href="/review/view/<%= posts._id %>" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="/images/posts/<%= posts.image_post %>" alt="Card image cap"></a>
                             <div class="card-body" id="card-body-home">
-                                <a href="/review/view/<%= PostsModel._id %>">
-                                    <h5 class="card-title" data-bs-placement="left" title="View Post">
-                                        <%= PostsModel.restaurant_name %>
-                                    </h5>
-                                </a>
-                                <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">
-                                    <%= PostsModel.food_name %>
+                                <div class="body-header">
+                                    <a href="/review/view/<%= posts._id %>" id="restaurant_name">
+                                        <h5 class="card-title font-weight-bold" data-bs-placement="left" title="View Post">
+                                            <%= posts.restaurant_name %>
+                                        </h5>
+                                    </a>
+                                    <div class="body-rating">
+                                        <p class="card-text float-right font-weight-bold">
+                                            Rating:
+                                            <%= posts.rating %>/10
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <h6 class="card-subtitle mb-2 text-muted font-italic" id="card-subtitle">
+                                    <%= posts.food_name %>
                                 </h6>
-                                <p class="card-text font-weight-bold">
-                                    Rating:
-                                    <%= PostsModel.rating %>/10
-                                </p>
                                 <p class="card-text">
-                                    <%= PostsModel.review %>
+                                    <%= posts.review %>
                                 </p>
-                                <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
-                                <small class="text-muted"><%= PostsModel.likes %></small>
                             </div>
                             <div class="card-footer">
+                                <div class="reactions">
+                                    <div class="likes">
+                                        <iconify-icon icon="bx:like" width="25" height="25" class="like-icon"></iconify-icon>
+                                        <!-- <iconify-icon icon="ant-design:like-twotone" style="color: #dc6769;"></iconify-icon> -->
+                                        <small class="text-muted" id="likes-text"><%= posts.likes %></small>
+                                    </div>
+                                    <div class="likes">
+                                        <iconify-icon icon="bx:dislike" width="25" height="25" class="like-icon"></iconify-icon>
+                                        <!-- <iconify-icon icon="ant-design:dislike-twotone" style="color: #dc6769;"></iconify-icon> -->
+                                        <small class="text-muted" id="likes-text"><%= posts.likes %></small>
+                                    </div>
+                                </div>
                                 <small class="text-muted">1 comment</small>
                                 <hr>
                                 <div class="comment-footer">

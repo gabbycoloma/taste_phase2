@@ -4,13 +4,19 @@ const mongoose = require('mongoose');
 const postsSchema = {
     username: {
         type: String,
+        ref: 'users',
         required: true,
         min: 8,
         max: 16
     },
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
+    },
     date: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now
     },
     image_post: {
         type: String,
@@ -38,6 +44,11 @@ const postsSchema = {
         required: true
     },
     likes: {
+        type: Number,
+        required: false,
+        default: 0
+    },
+    dislikes: {
         type: Number,
         required: false,
         default: 0

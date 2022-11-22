@@ -30,9 +30,13 @@
     <%- include('partials/header.ejs') %>
 
         <div class="container mt-5">
+            <div class="page-header mb-4">
+                <h1 class="page-header">Create post </h1>
+                <hr class="hr-line">
+            </div>
             <form action="/review/create/add" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="restaurant" class="form-label"><h3 class="form-heading">Restaurant / Brand of Product</h3></label>
+                    <label for="restaurant" class="form-label"><h5 class="form-heading">Restaurant / Brand of Product</h5></label>
                     <input type="text" class="form-control" id="inputRestaurant" name="restaurant_name" aria-describedby="emailHelp" required>
                     <div id="restaurantHelp" class="form-text">Input the restaurant or brand of product you want to review</div>
                 </div>
@@ -74,7 +78,7 @@
                     <label for="exampleFormControlTextarea1" class="form-label"><h5 class="form-heading">What can you say?</h5></label>
                     <textarea class="form-control" required id="exampleFormControlTextarea1" rows="3" name="review" placeholder="This place is great! Atmosphere is chill and cool but the staff is also really friendly. They know what they’re doing and what they’re talking about, and you can tell making the customers happy is their main priority. Food is pretty good, some italian classics and some twists, and for their prices it’s 100% worth it."></textarea>
                 </div>
-                <button type="submit" class="btn btn-danger" id="submit-button">Submit Review</button>
+                <button type="submit" class="btn btn-primary" id="submit-button">Submit Review</button>
 
             </form>
         </div>

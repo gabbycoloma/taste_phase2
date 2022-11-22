@@ -31,7 +31,7 @@ mongoose.connect("mongodb://localhost:27017/taste", {
 
 const store = new MongoDBsession({
     uri: mongoURI,
-    collection: 'sessions',
+    collection: 'sessions'
 })
 
 app.use(session({
@@ -63,18 +63,21 @@ const CommentsModel = require('./models/CommentsDB');
 
 const reviewRoute = require("./routes/Review");
 const { post } = require('./routes/Review');
-const user = require('./models/UsersDB');
-const { collection } = require('./models/UsersDB');
 app.use('/review', reviewRoute);
 
-app.get('/', isAuth, (req, res) => {
-    PostsModel.find({}, function(err, rows) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("index", { PostsModel: rows });
-        }
-    });
+app.get('/', isAuth, async(req, res) => {
+    const posts = await PostsModel.find().sort({
+        date: 'desc'
+    })
+
+    res.render("index", { posts: posts })
+        // PostsModel.find({}, function(err, rows) {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         res.render("index", { PostsModel: rows });
+        //     }
+        // });
 });
 
 app.get('/review/view/:posts_id', function(req, res) {
@@ -91,12 +94,31 @@ app.get('/review/view/:posts_id', function(req, res) {
 
 });
 
-app.post('/review/view/:posts_id/comment', function(req, res) {
+app.post('/review/view/:posts_id/comment', async(req, res) => {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num
 
+    const comment = new CommentsModel({
+        username: req.session.username,
+        comment: req.body.comment,
+        posts: posts_id
+    })
 
-    res.send(req.body.comment);
+    //save comment
+    await comment.save();
 
+    const postRelated = await PostsModel.findById(posts_id);
+
+    postRelated.comments.push(comment);
+
+    await postRelated.save(function(err, docs) {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect('/');
+            console.log("Updated Docs : ", docs);
+            console.log("added to db");
+        }
+    })
 });
 
 
@@ -116,6 +138,7 @@ app.post('/review/create/add', function(req, res) {
 
     const newPost = PostsModel({
         username: req.session.username,
+        user_id: req.session._id,
         restaurant_name: req.body.restaurant_name,
         food_name: req.body.food_name,
         date: req.body.date,
@@ -241,8 +264,12 @@ app.post('/login', async(req, res) => {
 
     req.session.isAuth = true;
     res.session = users;
+    req.session._id = users._id;
     req.session.username = users.username;
+    req.session.firstname = users.firstname;
+    req.session.lastname = users.lastname;
     req.session.user_image = users.user_image;
+    console.log(req.session._id);
     console.log(req.session.user_image);
     console.log(req.session.username);
     res.redirect("/");
@@ -271,7 +298,6 @@ app.post('/signup', async(req, res) => {
         email,
         password: hashedPW,
     });
-    console.log(req.body.email);
     await users.save();
 
     res.redirect('/login');

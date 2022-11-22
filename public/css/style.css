@@ -105,6 +105,18 @@ a {
     font-weight: 600;
 }
 
+a,
+a:hover,
+a:focus,
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+#restaurant_name {
+    font-weight: 600;
+}
+
 .checked {
     color: #DC6769;
 }
@@ -131,6 +143,22 @@ a {
     font-weight: 600;
     margin-left: 10px;
     margin-top: 10px;
+}
+
+.ellipsis {
+    float: right;
+    margin-top: 10px;
+}
+
+.ellipsis-dropdown {
+    border: none;
+    outline: none;
+    background: none;
+}
+
+.ellipsis-dropdown:focus {
+    border: none;
+    outline: none;
 }
 
 .username-mainheader a {
@@ -161,6 +189,15 @@ a {
 
 .card-text {
     font-family: 'PT Sans', sans-serif;
+    font-weight: 400;
+}
+
+.body-header {
+    display: flex;
+}
+
+.body-rating {
+    margin-left: auto;
     font-weight: 400;
 }
 
@@ -474,4 +511,33 @@ hr.style-one {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
+}
+
+#likes-text {
+    margin-left: 3px;
+}
+
+.page-header {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+}
+
+.reactions {
+    display: flex;
+    float: right;
+}
+
+.likes {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#like-button {
+    border: none;
+    border-radius: 10px;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 33px;
 }
