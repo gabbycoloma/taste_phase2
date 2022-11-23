@@ -226,17 +226,15 @@ app.get('/review/delete/:posts_id', function(req, res) {
 
 
 
-app.get('/profile', function(req, res) {
-    UserModel.find({ username: req.session.username }, function(err, result) {
+app.get('/profile', async function(req, res) {
+    UserModel.findOne({ username: req.session.username }, function(err, result) {
         if (err) {
             console.log(err);
         } else {
-            res.render("profile", { UserModel: result[0] });
+            res.render('profile', { UserModel: result });
         }
     });
 })
-
-
 
 app.get('/landingpage', function(req, res) {
     res.render('landingpage');
@@ -288,6 +286,7 @@ app.post('/signup', async(req, res) => {
     if (users) {
         return res.redirect('/signup')
     }
+
     const salt = bcrypt.genSaltSync(10);
     const hashedPW = await bcrypt.hash(password, salt);
     console.log(hashedPW);
@@ -304,6 +303,29 @@ app.post('/signup', async(req, res) => {
 
 });
 
+app.post('/change-user-details', function(req, res){
+
+    const firstName = req.body.firstname;
+    const lastName = req.body.lastname;
+    const userName = req.body.username;
+    const email = req.body.email;
+    const bio = req.body.bio;
+
+    const userID = req.body.id;
+    const query = {_id: userID};
+
+    console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //BEFORE
+
+    UserModel.updateOne(query, {username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio}, function(err, result){
+        if(err){
+            console.log(err);
+        } else {
+            console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
+            res.redirect('profile');
+        }
+    });
+});
+
 app.get('/logout', function(req, res) {
     req.session.destroy((err) => {
         if (err) throw err;
@@ -311,14 +333,6 @@ app.get('/logout', function(req, res) {
         res.redirect("/landingpage");
     })
 });
-
-app.get('/logout', function(req, res) {
-    req.session.destroy((err) => {
-        if (err) throw err;
-        res.redirect("/landingpage");
-    })
-});
-
 
 app.get('/about', function(req, res) {
     res.render('aboutus');

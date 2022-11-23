@@ -20,9 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="images/logo/logo2.png" type="image/icon type">
 
-    <title>Taste -
-        <%= UserModel.firstname %>
-            <%= UserModel.lastname %>
+    <title>Taste
     </title>
 
 </head>
@@ -69,9 +67,7 @@
                             </div>
                             <div id="i-box">
                                 <%# just add description here %>
-                                    <div id="intro-line">Ang Pogi Ko</div>
-                                    <div id="u-occ">Birthday</div>
-                                    <div id="u-loc">Lives in Manila</div>
+                                <%= UserModel.Bio %>
                             </div>
                         </div>
 
@@ -95,7 +91,7 @@
                             </div>
                         </div>
 
-                        <div class="container">
+                        <div class="container"> <!-- ADD FUNCTION FOR OWN POSTS -->
 
                             <!--POST 1-->
                             <div class="row mt-5 mb-5">
@@ -177,6 +173,9 @@
                     </div>
                 </div>
             </div>
+
+
+
             <!-- Pop Up Modal for Edit Profile-->
             <div class="modal fade" id="edit-profile">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -200,14 +199,14 @@
                                                                 <div class="col-12 col-sm-auto mb-3">
                                                                     <div class="mx-auto" style="width: 140px;">
                                                                         <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                                                                            <img class="d-flex justify-content-center align-items-center rounded" style="height: 140px; width:140px; object-fit: cover;" src="images/aboutus/Coloma.jpg" alt="Louis Pic">
+                                                                            <img class="d-flex justify-content-center align-items-center rounded" style="height: 140px; width:140px; object-fit: cover; border: 1px solid lightgray;" src="/images/profile/<%= UserModel.user_image %>" alt="Rudeus">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                                                     <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                                        <h5 class="pt-sm-2 pb-1 mb-0 text-nowrap">Louis Coloma</h5>
-                                                                        <p class="mb-0">@lgc.gabby</p>
+                                                                        <h5 class="pt-sm-2 pb-1 mb-0 text-nowrap"><%= UserModel.firstname %> <%= UserModel.lastname %></h5>
+                                                                        <p class="mb-0">@<%= UserModel.username %></p>
 
                                                                         <div class="mt-2">
                                                                             <button class="btn btn-primary" type="button">
@@ -220,20 +219,27 @@
                                                             </div>
                                                             <div class="tab-content pt-3">
                                                                 <div class="tab-pane active">
-                                                                    <form class="form" novalidate="">
+                                                                    <div class="form">
                                                                         <div class="row">
-                                                                            <div class="col">
+                                                                            <form class="col" method="post" action="/change-user-details"> <!-- Change Account Details Form-->
                                                                                 <div class="row">
                                                                                     <div class="col">
-                                                                                        <div class="form-group">
-                                                                                            <label>Full Name</label>
-                                                                                            <input class="form-control" type="text" name="name" placeholder="Louis Coloma" value="Louis Coloma">
+                                                                                        <input type="hidden" value="<%= UserModel.id %>" name="id">
+                                                                                        <div class="form-group"> 
+                                                                                            <label>First Name</label>
+                                                                                            <input class="form-control" type="text" placeholder="<%= UserModel.firstname %>" value="<%= UserModel.firstname %>" name="firstname">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col">
+                                                                                        <div class="form-group"> 
+                                                                                            <label>Last Name</label>
+                                                                                            <input class="form-control" type="text" placeholder="<%= UserModel.lastname %>" value="<%= UserModel.lastname %>" name="lastname">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col">
                                                                                         <div class="form-group">
                                                                                             <label>Username</label>
-                                                                                            <input class="form-control" type="text" name="username" placeholder="lgc.gabby" value="lgc.gabby">
+                                                                                            <input class="form-control" type="text" placeholder="<%= UserModel.username %>" value="<%= UserModel.username %>" name="username">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -241,7 +247,7 @@
                                                                                     <div class="col">
                                                                                         <div class="form-group">
                                                                                             <label>Email</label>
-                                                                                            <input class="form-control" type="text" placeholder="gabby.coloma@gmail.com">
+                                                                                            <input class="form-control" type="text" placeholder="<%= UserModel.email %>" value="<%= UserModel.email %>" name="email">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -249,45 +255,54 @@
                                                                                     <div class="col mb-3">
                                                                                         <div class="form-group">
                                                                                             <label>About</label>
-                                                                                            <textarea class="form-control" rows="5" placeholder="My Bio"></textarea>
+                                                                                            <textarea class="form-control" rows="5" placeholder="My Bio" name="bio"></textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
+                                                                                <div>
+                                                                                    <input class="full-width btn btn-success" type="submit" id="login-submit" value="Change Details">
+                                                                                </div>
+                                                                            </form>
+                                                                        </div><br><br>
+                                                                    </div>
+                                                                    <hr>
+                                                                    <div class="form">
                                                                         <div class="row">
                                                                             <div class="col-12 col-sm-6 mb-3">
                                                                                 <div class="mb-3">
                                                                                     <h5>Change Password</h5>
                                                                                 </div>
-                                                                                <div class="row">
-                                                                                    <div class="col">
-                                                                                        <div class="form-group">
-                                                                                            <label>Current Password</label>
-                                                                                            <input class="form-control" type="password" placeholder="••••••">
+                                                                                <br>
+                                                                                <form method="post" action="/change-password"> <!-- Change Password Form-->
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            <div class="form-group">
+                                                                                                <label>Current Password</label>
+                                                                                                <input class="form-control" type="password" placeholder="••••••••" name="current_password">
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col">
-                                                                                        <div class="form-group">
-                                                                                            <label>New Password</label>
-                                                                                            <input class="form-control" type="password" placeholder="••••••">
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            <div class="form-group">
+                                                                                                <label>New Password</label>
+                                                                                                <input class="form-control" type="password" name="new_password">
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col">
-                                                                                        <div class="form-group">
-                                                                                            <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                                                                            <input class="form-control" type="password" placeholder="••••••"></div>
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            <div class="form-group">
+                                                                                                <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
+                                                                                                <input class="form-control" type="password" name="confirm_password">
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
+                                                                                    <input class="full-width btn btn-success" type="submit" id="login-submit" value="Change Password">
+                                                                                </form>
                                                                             </div>
-
                                                                         </div>
-                                                                    </form>
-
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -300,12 +315,14 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-secondary d-inline-block" data-dismiss="modal">Close</button> <button class="btn btn-primary d-inline-block" type="submit">Save Changes</button>
+                                <button class="btn btn-primary d-inline-block" type="submit">Done</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <script src="server.js"></script>
 </body>
 
 </html>
