@@ -128,6 +128,7 @@ app.get("/review/create", isAuth, (req, res) => {
 
 app.post('/review/create/add', function(req, res) {
     console.log(req.files);
+    console.log("added to db");
     // Get the file that was set to our field named "image_post"
     const { image_post } = req.files;
 
@@ -138,7 +139,7 @@ app.post('/review/create/add', function(req, res) {
 
     const newPost = PostsModel({
         username: req.session.username,
-        user_image: req.session.user_image,
+        user_image: req.body.user_image,
         user_id: req.session._id,
         restaurant_name: req.body.restaurant_name,
         food_name: req.body.food_name,

@@ -35,6 +35,7 @@
                 <hr class="hr-line">
             </div>
             <form action="/review/create/add" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="user_image" value="<%= session.user_image %>">
                 <div class="mb-3">
                     <label for="restaurant" class="form-label"><h5 class="form-heading">Restaurant / Brand of Product</h5></label>
                     <input type="text" class="form-control" id="inputRestaurant" name="restaurant_name" aria-describedby="emailHelp" required>
