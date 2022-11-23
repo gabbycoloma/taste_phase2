@@ -138,6 +138,7 @@ app.post('/review/create/add', function(req, res) {
 
     const newPost = PostsModel({
         username: req.session.username,
+        user_image: req.session.user_image,
         user_id: req.session._id,
         restaurant_name: req.body.restaurant_name,
         food_name: req.body.food_name,
