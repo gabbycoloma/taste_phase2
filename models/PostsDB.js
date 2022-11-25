@@ -9,6 +9,9 @@ const postsSchema = {
         min: 8,
         max: 16
     },
+    user_image:{
+        type: String
+    },
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
