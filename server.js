@@ -298,6 +298,7 @@ app.post('/signup', async(req, res) => {
         username,
         email,
         password: hashedPW,
+        Bio: "The user has not added a bio yet."
     });
     await users.save();
 
@@ -305,10 +306,22 @@ app.post('/signup', async(req, res) => {
 
 });
 
+<<<<<<< Updated upstream
 
 // CHANGE ONLY USER DETAILS NOT PASSWORD
-app.post('/change-user-details', function(req, res){
+app.post('/change-user-details', function(req, res) {
+=======
+app.post('/profile/edit', function(req, res) {
+    // console.log(req.files);
+    // console.log("added to db");
+    // // Get the file that was set to our field named "image_post"
+    // const { image_post } = req.files;
 
+    // // If no image submitted, exit
+    // if (!image_post) return res.sendStatus(400);
+>>>>>>> Stashed changes
+
+    // image_post.mv(__dirname + '/images/posts/' + image_post.name);
     const firstName = req.body.firstname;
     const lastName = req.body.lastname;
     const userName = req.body.username;
@@ -316,22 +329,33 @@ app.post('/change-user-details', function(req, res){
     const bio = req.body.bio;
 
     const userID = req.body.id;
-    const query = {_id: userID};
+    const query = { _id: userID };
 
     console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //BEFORE
 
-    UserModel.updateOne(query, {username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio}, function(err, result){
-        if(err){
+    UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio }, function(err, result) {
+        if (err) {
             console.log(err);
         } else {
+<<<<<<< Updated upstream
             console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
             res.redirect('profile');
+=======
+            req.session.username = userName;
+
+            console.log("Session username: " + req.session.username + firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
+            res.redirect('back');
+>>>>>>> Stashed changes
         }
     });
 });
 
 //CHANGE PASSWORD OF USER
-app.post('/change-user-password', async function(req, res){
+<<<<<<< Updated upstream
+app.post('/change-user-password', async function(req, res) {
+=======
+app.post('/profile/edit/password', async function(req, res) {
+>>>>>>> Stashed changes
 
     const actualCurrentPassword = req.body.actual_currentPW;
     const currentPassword = req.body.current_password;
@@ -339,29 +363,44 @@ app.post('/change-user-password', async function(req, res){
     const confirmPassword = req.body.confirm_password;
 
     const userID = req.body.id;
-    const query = {_id: userID};
+    const query = { _id: userID };
 
     const isMatch = await bcrypt.compare(currentPassword, actualCurrentPassword);
 
-    if(isMatch && (newPassword === confirmPassword)){
-        
+    if (isMatch && (newPassword === confirmPassword)) {
+
         const salt = bcrypt.genSaltSync(10);
         const hashedPW = await bcrypt.hash(newPassword, salt);
 
-        UserModel.updateOne(query, {password: hashedPW}, (err, result) => {
-            if(err) {
+        UserModel.updateOne(query, { password: hashedPW }, (err, result) => {
+            if (err) {
                 console.log(err);
             } else {
                 console.log(hashedPW);
             }
         });
-        
-    } else if(!isMatch) {
+
+    } else if (!isMatch) {
         console.log("Wrong Password");
-    } else if(isMatch) {
+    } else if (isMatch) {
         console.log("Passwords do not match");
     }
+<<<<<<< Updated upstream
     return res.redirect('profile');
+=======
+    return res.redirect('back');
+
+    // console.log(password); //BEFORE
+
+    // UserModel.updateOne(query, {username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio}, function(err, result){
+    //     if(err){
+    //         console.log(err);
+    //     } else {
+    //         console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
+    //         res.redirect('profile');
+    //     }
+    // });
+>>>>>>> Stashed changes
 });
 
 app.get('/logout', function(req, res) {
@@ -382,18 +421,20 @@ app.post('/search', function(req, res) {
     searchQuery = req.body.search_query
     console.log(searchQuery);
 
-    PostsModel.find({$or: [{username: searchQuery}, {food_name: searchQuery}, {restaurant_name: searchQuery}]}, (err, searchResults) => {
-        if(err){
+    PostsModel.find({
+        $or: [{ username: new RegExp(searchQuery, 'i') }, { food_name: { $regex: new RegExp(searchQuery, 'i') } }, { restaurant_name: { $regex: req.body.search_query } }]
+    }, (err, searchResults) => {
+        if (err) {
             console.log(err);
-        } else{
+        } else {
             res.render('searchresults', {
                 searchKey: searchQuery,
                 posts: searchResults
             });
         }
-    }).sort({date: 'desc'});
+    }).sort({ date: 'desc' });
 
-    
+
 });
 
 app.listen(3000, function() {

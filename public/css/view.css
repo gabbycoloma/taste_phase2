@@ -286,7 +286,7 @@ button {
 .cnt-label span {
     position: relative;
     top: 2px;
-    color: #707070;
+    color: black;
     font-size: 18px;
 }
 
@@ -355,7 +355,7 @@ button {
 }
 
 #i-box {
-    color: #797979;
+    color: #707070;
     font-size: 14px;
     line-height: 1.3;
 }
