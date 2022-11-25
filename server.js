@@ -305,13 +305,9 @@ app.post('/signup', async(req, res) => {
 
 });
 
-<<<<<<< Updated upstream
 
 // CHANGE ONLY USER DETAILS NOT PASSWORD
 app.post('/change-user-details', function(req, res){
-=======
-app.post('/profile/edit', function(req, res) {
->>>>>>> Stashed changes
 
     const firstName = req.body.firstname;
     const lastName = req.body.lastname;
@@ -320,19 +316,16 @@ app.post('/profile/edit', function(req, res) {
     const bio = req.body.bio;
 
     const userID = req.body.id;
-    const query = { _id: userID };
-
+    const query = {_id: userID};
 
     console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //BEFORE
 
-    UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio }, function(err, result) {
-        if (err) {
+    UserModel.updateOne(query, {username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio}, function(err, result){
+        if(err){
             console.log(err);
         } else {
-            req.session.username = userName;
-
-            console.log("Session username: " + req.session.username + firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
-            res.redirect('/');
+            console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
+            res.redirect('profile');
         }
     });
 });
