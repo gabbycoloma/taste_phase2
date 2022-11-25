@@ -362,17 +362,6 @@ app.post('/change-user-password', async function(req, res){
         console.log("Passwords do not match");
     }
     return res.redirect('profile');
-    
-    // console.log(password); //BEFORE
-
-    // UserModel.updateOne(query, {username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio}, function(err, result){
-    //     if(err){
-    //         console.log(err);
-    //     } else {
-    //         console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
-    //         res.redirect('profile');
-    //     }
-    // });
 });
 
 app.get('/logout', function(req, res) {
@@ -387,8 +376,24 @@ app.get('/about', function(req, res) {
     res.render('aboutus');
 });
 
-app.get('/search', function(req, res) {
-    res.render('searchresults');
+// SEARCH STUFF
+app.post('/search', function(req, res) {
+
+    searchQuery = req.body.search_query
+    console.log(searchQuery);
+
+    PostsModel.find({$or: [{username: searchQuery}, {food_name: searchQuery}, {restaurant_name: searchQuery}]}, (err, searchResults) => {
+        if(err){
+            console.log(err);
+        } else{
+            res.render('searchresults', {
+                searchKey: searchQuery,
+                posts: searchResults
+            });
+        }
+    }).sort({date: 'desc'});
+
+    
 });
 
 app.listen(3000, function() {
