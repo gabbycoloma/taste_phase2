@@ -67,7 +67,7 @@
                             </div>
                             <div id="i-box">
                                 <%# just add description here %>
-                                <%= UserModel.Bio %>
+                                    <%= UserModel.Bio %>
                             </div>
                         </div>
 
@@ -91,7 +91,8 @@
                             </div>
                         </div>
 
-                        <div class="container"> <!-- ADD FUNCTION FOR OWN POSTS -->
+                        <div class="container">
+                            <!-- ADD FUNCTION FOR OWN POSTS -->
 
                             <!--POST 1-->
                             <div class="row mt-5 mb-5">
@@ -206,8 +207,13 @@
                                                                 </div>
                                                                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                                                     <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                                        <h5 class="pt-sm-2 pb-1 mb-0 text-nowrap"><%= UserModel.firstname %> <%= UserModel.lastname %></h5>
-                                                                        <p class="mb-0">@<%= UserModel.username %></p>
+                                                                        <h5 class="pt-sm-2 pb-1 mb-0 text-nowrap">
+                                                                            <%= UserModel.firstname %>
+                                                                                <%= UserModel.lastname %>
+                                                                        </h5>
+                                                                        <p class="mb-0">@
+                                                                            <%= UserModel.username %>
+                                                                        </p>
 
                                                                         <div class="mt-2">
                                                                             <button class="btn btn-primary" type="button">
@@ -222,17 +228,18 @@
                                                                 <div class="tab-pane active">
                                                                     <div class="form">
                                                                         <div class="row">
-                                                                            <form class="col" method="post" action="/change-user-details"> <!-- Change Account Details Form-->
+                                                                            <form class="col" method="post" action="/profile/edit">
+                                                                                <!-- Change Account Details Form-->
                                                                                 <div class="row">
                                                                                     <div class="col">
                                                                                         <input type="hidden" value="<%= UserModel.id %>" name="id">
-                                                                                        <div class="form-group"> 
+                                                                                        <div class="form-group">
                                                                                             <label>First Name</label>
                                                                                             <input class="form-control" type="text" placeholder="<%= UserModel.firstname %>" value="<%= UserModel.firstname %>" name="firstname">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col">
-                                                                                        <div class="form-group"> 
+                                                                                        <div class="form-group">
                                                                                             <label>Last Name</label>
                                                                                             <input class="form-control" type="text" placeholder="<%= UserModel.lastname %>" value="<%= UserModel.lastname %>" name="lastname">
                                                                                         </div>
@@ -274,7 +281,12 @@
                                                                                     <h5>Change Password</h5>
                                                                                 </div>
                                                                                 <br>
+<<<<<<< Updated upstream
                                                                                 <form method="post" action="/change-user-password"> <!-- Change Password Form-->
+=======
+                                                                                <form method="post" action="/change-password">
+                                                                                    <!-- Change Password Form-->
+>>>>>>> Stashed changes
                                                                                     <div class="row">
                                                                                         <input type="hidden" value="<%= UserModel.id %>" name="id"> <!-- Will be used for query later -->
                                                                                         <input type="text" value="<%= UserModel.password %>" name="actual_currentPW" hidden>
