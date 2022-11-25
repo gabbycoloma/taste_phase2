@@ -273,8 +273,11 @@
                                                                                     <h5>Change Password</h5>
                                                                                 </div>
                                                                                 <br>
-                                                                                <form method="post" action="/change-password"> <!-- Change Password Form-->
+                                                                                <form method="post" action="/change-user-password"> <!-- Change Password Form-->
                                                                                     <div class="row">
+                                                                                        <input type="hidden" value="<%= UserModel.id %>" name="id"> <!-- Will be used for query later -->
+                                                                                        <input type="text" value="<%= UserModel.password %>" name="actual_currentPW" hidden>
+
                                                                                         <div class="col">
                                                                                             <div class="form-group">
                                                                                                 <label>Current Password</label>
@@ -298,6 +301,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
+                                                                                    <div id="message"></div>
                                                                                     <input class="full-width btn btn-success" type="submit" id="login-submit" value="Change Password">
                                                                                 </form>
                                                                             </div>

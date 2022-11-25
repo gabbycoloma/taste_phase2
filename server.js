@@ -303,6 +303,8 @@ app.post('/signup', async(req, res) => {
 
 });
 
+
+// CHANGE ONLY USER DETAILS NOT PASSWORD
 app.post('/change-user-details', function(req, res){
 
     const firstName = req.body.firstname;
@@ -324,6 +326,51 @@ app.post('/change-user-details', function(req, res){
             res.redirect('profile');
         }
     });
+});
+
+//CHANGE PASSWORD OF USER
+app.post('/change-user-password', async function(req, res){
+
+    const actualCurrentPassword = req.body.actual_currentPW;
+    const currentPassword = req.body.current_password;
+    const newPassword = req.body.new_password;
+    const confirmPassword = req.body.confirm_password;
+
+    const userID = req.body.id;
+    const query = {_id: userID};
+
+    const isMatch = await bcrypt.compare(currentPassword, actualCurrentPassword);
+
+    if(isMatch && (newPassword === confirmPassword)){
+        
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPW = await bcrypt.hash(newPassword, salt);
+
+        UserModel.updateOne(query, {password: hashedPW}, (err, result) => {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log(hashedPW);
+            }
+        });
+        
+    } else if(!isMatch) {
+        console.log("Wrong Password");
+    } else if(isMatch) {
+        console.log("Passwords do not match");
+    }
+    return res.redirect('profile');
+    
+    // console.log(password); //BEFORE
+
+    // UserModel.updateOne(query, {username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio}, function(err, result){
+    //     if(err){
+    //         console.log(err);
+    //     } else {
+    //         console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
+    //         res.redirect('profile');
+    //     }
+    // });
 });
 
 app.get('/logout', function(req, res) {
