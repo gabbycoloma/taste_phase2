@@ -98,17 +98,32 @@ app.get('/review/view/:posts_id', async(req, res) => {
 app.post('/review/view/:posts_id/like', async(req, res) => {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num
 
-    await PostsModel.update({
+    await PostsModel.updateOne({
         _id: posts_id,
         likes: { $ne: req.session._id }
     }, {
         $inc: { likeCount: 1 },
         $push: { likes: req.session._id }
     })
-
+    
 
     res.redirect('back');
 });
+app.post('/review/view/:posts_id/dislike', async(req, res) => {
+    const posts_id = req.params.posts_id; //request the userId of the edited ID num
+
+    await PostsModel.updateOne({
+        _id: posts_id,
+        likes:  req.session._id 
+    }, {
+        $inc: { likeCount: -1 },
+        $pull: { likes: req.session._id }
+    })
+
+    res.redirect('back');
+    
+});
+
 
 app.post('/review/view/:posts_id/comment', async(req, res) => {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num

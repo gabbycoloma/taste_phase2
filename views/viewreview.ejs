@@ -46,10 +46,16 @@
                 <div class="reactions">
                     <div class="likes">
                         <form action="/review/view/<%= posts._id %>/like" method="post">
-                            <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/up.png"></button>
+                            <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/upvote.png"></button>
                         </form>
+                        
                     </div>
                     <small class="text-muted" id="likes-text"><%= posts.likeCount %></small>
+                    <div class="dislikes">
+                    <form action="/review/view/<%= posts._id %>/dislike" method="post">
+                            <button type="submit" class="btn btn-sm" id="btn-roll2"><img id="img2" width="25" height="25" src="/images/view/downvote.png"></button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
