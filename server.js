@@ -63,10 +63,10 @@ const CommentsModel = require('./models/CommentsDB');
 
 
 
-const reviewRoute = require("./routes/Review");
+// const reviewRoute = require("./routes/Review");
 const { post } = require('./routes/Review');
 const { init } = require('./models/PostsDB');
-app.use('/review', reviewRoute);
+// app.use('/review', reviewRoute);
 
 app.get('/', isAuth, async(req, res) => {
     const posts = await PostsModel.find().sort({
