@@ -1,7 +1,0 @@
-const mongoose = require('mongoose');
-
-
-
-
-const like = mongoose.model("like", likesSchema);
-module.exports = like;

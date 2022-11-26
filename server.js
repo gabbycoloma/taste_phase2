@@ -99,13 +99,12 @@ app.post('/review/view/:posts_id/like', async(req, res) => {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num
 
     await PostsModel.updateOne({
-        _id: posts_id,
-        likes: { $ne: req.session._id }
+        _id: posts_id
     }, {
         $inc: { likeCount: 1 },
         $push: { likes: req.session._id }
     })
-    
+
 
     res.redirect('back');
 });
@@ -113,15 +112,14 @@ app.post('/review/view/:posts_id/dislike', async(req, res) => {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num
 
     await PostsModel.updateOne({
-        _id: posts_id,
-        likes:  req.session._id 
+        _id: posts_id
     }, {
         $inc: { likeCount: -1 },
         $pull: { likes: req.session._id }
     })
 
     res.redirect('back');
-    
+
 });
 
 
@@ -341,8 +339,12 @@ app.post('/profile/edit/password', async function(req, res) {
 });
 
 
-app.get('/landingpage', function(req, res) {
-    res.render('landingpage');
+app.get('/landingpage', async function(req, res) {
+    const posts = await PostsModel.find().sort({
+        rating: 'desc'
+    }).limit(2);
+
+    res.render('landingpage', { posts: posts });
 });
 
 //Login User

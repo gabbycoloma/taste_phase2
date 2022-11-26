@@ -62,51 +62,39 @@
 
                 <div class="container">
                     <div class="row mt-5 mb-5">
-                        <div class="col-sm">
-                            <div class="card">
-                                <div class="card-header" id="card-header">
-                                    <div class="header-account">
-                                        <img src="images/aboutus/Coloma.jpg" alt="defaultDP" class="img-DP">
-                                        <h6 class="username-header" id="username">lgc.gabby</h6>
+                        <% posts.forEach(function (posts) {   %>
+                            <div class="col-sm">
+                                <div class="card">
+                                    <div class="card-header" id="card-header">
+                                        <div class="header-account">
+                                            <img src="/images/profile/<%= posts.user_image %>" alt="defaultDP" class="img-DP">
+                                            <h6 class="username-header" id="username">
+                                                <h6>
+                                                    <%= posts.username %>
+                                                </h6>
+                                        </div>
+
                                     </div>
+                                    <img class="card-img-top" src="/images/posts/<%= posts.image_post %>" alt="Card image cap">
+                                    <div class="card-body" id="card-body-home">
+                                        <h5 class="card-title">
+                                            <%= posts.restaurant_name %>
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">
+                                            <%= posts.food_name %>
+                                        </h6>
+                                        <div class="mb-3">
+                                            <label for="date" class="form-label"><h6 class="form-heading"><%= posts.rating %>/10</h6></label>
+                                        </div>
 
-                                </div>
-                                <img class="card-img-top" src="images/carousel/carousel_1.jpg" alt="Card image cap">
-                                <div class="card-body" id="card-body-home">
-                                    <h5 class="card-title">First Impressions of Pho</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">Pho - Vegetable Noodle Soup</h6>
-                                    <div class="mb-3">
-                                        <label for="date" class="form-label"><h6 class="form-heading">Rating: 9/10</h6></label>
+                                        <p class="card-text">
+                                            <%= posts.review %>
+                                        </p>
                                     </div>
-
-                                    <p class="card-text">This is my first time having Pho. First thing I liked about Pho was the soup. It was light on the stomach and the broth was tasty.The noodles were thin and wide, and soaked up the soup which also made it very tasty.
-                                        Overall, my first impression of Pho is good.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm">
-                            <div class="card">
-                                <div class="card-header" id="card-header">
-                                    <div class="header-account">
-                                        <img src="/images/profile/jake-whiteaker.jpg" alt="defaultDP" class="img-DP">
-                                        <h6 class="username-header">el.diablo</h6>
-                                    </div>
-
-                                </div>
-                                <img class="card-img-top" src="images/home/salad-saladstop.jpg" alt="Card image cap">
-                                <div class="card-body" id="card-body-home">
-                                    <h5 class="card-title">Salad Stop</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">Caesar Salad</h6>
-                                    <div class="mb-3">
-                                        <label for="date" class="form-label"><h6 class="form-heading">Rating: 9/10</h6></label>
-                                    </div>
-
-                                    <p class="card-text">I was looking for something light to eat and I came across Salad Stop and ordered the usual Caesar salad. It was really good. The dressing was really good and you could really tell the lettuce and other vegetables were
-                                        fresh. It is a bit pricey though.</p>
                                 </div>
                             </div>
-                        </div>
+                            <%});%>
+
                     </div>
                 </div>
             </div>
