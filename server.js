@@ -310,7 +310,7 @@ app.post('/signup', async(req, res) => {
 
 
 // CHANGE ONLY USER DETAILS NOT PASSWORD
-app.post('/change-user-details', function(req, res) {
+app.post('/edit-details', function(req, res) {
 
     // image_post.mv(__dirname + '/images/posts/' + image_post.name);
     const firstName = req.body.firstname;
@@ -320,22 +320,34 @@ app.post('/change-user-details', function(req, res) {
     const bio = req.body.bio;
 
     const userID = req.body.id;
-    const query = { _id: userID };
+    const userQuery = { _id: userID };
+    
 
     console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //BEFORE
 
-    UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio }, function(err, result) {
+    UserModel.updateOne(userQuery, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio }, (err, result) => {
         if (err) {
             console.log(err);
         } else {
             console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
+        }
+    });
+
+    oldUsername = req.session.username;
+    const postsQuery = { username: oldUsername};
+
+    PostsModel.updateMany(postsQuery, {$set:{username: userName}}, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            req.session.username = userName;
             res.redirect('profile');
         }
     });
 });
 
 //CHANGE PASSWORD OF USER
-app.post('/change-user-password', async function(req, res) {
+app.post('/edit-password', async function(req, res) {
 
     const actualCurrentPassword = req.body.actual_currentPW;
     const currentPassword = req.body.current_password;
