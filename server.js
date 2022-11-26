@@ -12,11 +12,13 @@ const app = express();
 
 const mongoURI = "mongodb://0.0.0.0:27017/taste";
 
+app.use(bodyparser());
 app.use(express.static("public"));
 app.use(express.static(__dirname));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
+app.use(express.json());
 
 
 // set the view engine to ejs
@@ -63,6 +65,7 @@ const CommentsModel = require('./models/CommentsDB');
 
 const reviewRoute = require("./routes/Review");
 const { post } = require('./routes/Review');
+const { init } = require('./models/PostsDB');
 app.use('/review', reviewRoute);
 
 app.get('/', isAuth, async(req, res) => {
@@ -80,20 +83,31 @@ app.get('/', isAuth, async(req, res) => {
         // });
 });
 
-app.get('/review/view/:posts_id', function(req, res) {
-     //request the userId of the edited ID num
-     try{
-    PostsModel.findOne({ _id: req.params.posts_id }, function(err, result) {
-        posts=result;
-     });
-     CommentsModel.find({ posts: req.params.posts_id }, function(err, result) {
-        comments=result;
-     });
+app.get('/review/view/:posts_id', async(req, res) => {
+    //request the userId of the edited ID num
 
- res.render("viewreview", { posts, comments });
-}catch(err){
-    console.log(err)
-}
+    let posts = await PostsModel.findOne({ _id: req.params.posts_id });
+
+    let comments = await CommentsModel.find({ posts: req.params.posts_id });
+
+
+
+    res.render("viewreview", { posts, comments });
+});
+
+app.post('/review/view/:posts_id/like', async(req, res) => {
+    const posts_id = req.params.posts_id; //request the userId of the edited ID num
+
+    await PostsModel.update({
+        _id: posts_id,
+        likes: { $ne: req.session._id }
+    }, {
+        $inc: { likeCount: 1 },
+        $push: { likes: req.session._id }
+    })
+
+
+    res.redirect('back');
 });
 
 app.post('/review/view/:posts_id/comment', async(req, res) => {
@@ -116,7 +130,7 @@ app.post('/review/view/:posts_id/comment', async(req, res) => {
         if (err) {
             console.log(err)
         } else {
-            res.redirect('/review/view/'+ posts_id);
+            res.redirect('/review/view/' + posts_id);
             console.log("Updated Docs : ", docs);
             console.log("added to db");
         }
@@ -231,14 +245,86 @@ app.get('/review/delete/:posts_id', function(req, res) {
 
 
 app.get('/profile', async function(req, res) {
+    const posts = await PostsModel.find({ username: req.session.username });
+
+
     UserModel.findOne({ username: req.session.username }, function(err, result) {
         if (err) {
             console.log(err);
         } else {
-            res.render('profile', { UserModel: result });
+            res.render('profile', { UserModel: result, posts: posts });
         }
     });
-})
+});
+
+app.post('/profile/edit', async(req, res) => {
+    var initialUsername = req.session.username;
+    var initialImage = req.session.user_image;
+    console.log(req.files);
+    console.log("added to db");
+    // Get the file that was set to our field named "user_image"
+    var { user_image } = req.files;
+
+    // If no image submitted, exit
+    if (!user_image) return res.sendStatus(400);
+
+    user_image.mv(__dirname + '/images/profile/' + user_image.name);
+    const firstName = req.body.firstname;
+    const lastName = req.body.lastname;
+    const userName = req.body.username;
+    const email = req.body.email;
+    const bio = req.body.bio;
+    user_image = user_image.name;
+    const userID = req.body.id;
+    const query = { _id: userID };
+    console.log("Initial username: " + initialUsername + "            Username Changed: " + userName + "            Image: " + user_image);
+    await PostsModel.updateMany({ username: initialUsername }, { $set: { username: userName, user_image: user_image } });
+    await CommentsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
+    UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio, user_image: user_image }, function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            req.session.username = userName;
+            req.session.user_image = user_image;
+            res.redirect('back');
+        }
+    });
+});
+
+//CHANGE PASSWORD OF USER
+app.post('/profile/edit/password', async function(req, res) {
+
+    const actualCurrentPassword = req.body.actual_currentPW;
+    const currentPassword = req.body.current_password;
+    const newPassword = req.body.new_password;
+    const confirmPassword = req.body.confirm_password;
+
+    const userID = req.body.id;
+    const query = { _id: userID };
+
+    const isMatch = await bcrypt.compare(currentPassword, actualCurrentPassword);
+
+    if (isMatch && (newPassword === confirmPassword)) {
+
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPW = await bcrypt.hash(newPassword, salt);
+
+        UserModel.updateOne(query, { password: hashedPW }, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(hashedPW);
+            }
+        });
+
+    } else if (!isMatch) {
+        console.log("Wrong Password");
+    } else if (isMatch) {
+        console.log("Passwords do not match");
+    }
+    return res.redirect('back');
+});
+
 
 app.get('/landingpage', function(req, res) {
     res.render('landingpage');
@@ -271,9 +357,7 @@ app.post('/login', async(req, res) => {
     req.session.firstname = users.firstname;
     req.session.lastname = users.lastname;
     req.session.user_image = users.user_image;
-    console.log(req.session._id);
-    console.log(req.session.user_image);
-    console.log(req.session.username);
+    console.log("")
     res.redirect("/");
 });
 
@@ -308,66 +392,6 @@ app.post('/signup', async(req, res) => {
 
 });
 
-
-// CHANGE ONLY USER DETAILS NOT PASSWORD
-app.post('/change-user-details', function(req, res) {
-
-    // image_post.mv(__dirname + '/images/posts/' + image_post.name);
-    const firstName = req.body.firstname;
-    const lastName = req.body.lastname;
-    const userName = req.body.username;
-    const email = req.body.email;
-    const bio = req.body.bio;
-
-    const userID = req.body.id;
-    const query = { _id: userID };
-
-    console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //BEFORE
-
-    UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio }, function(err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
-            res.redirect('profile');
-        }
-    });
-});
-
-//CHANGE PASSWORD OF USER
-app.post('/change-user-password', async function(req, res) {
-
-    const actualCurrentPassword = req.body.actual_currentPW;
-    const currentPassword = req.body.current_password;
-    const newPassword = req.body.new_password;
-    const confirmPassword = req.body.confirm_password;
-
-    const userID = req.body.id;
-    const query = { _id: userID };
-
-    const isMatch = await bcrypt.compare(currentPassword, actualCurrentPassword);
-
-    if (isMatch && (newPassword === confirmPassword)) {
-
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPW = await bcrypt.hash(newPassword, salt);
-
-        UserModel.updateOne(query, { password: hashedPW }, (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(hashedPW);
-            }
-        });
-
-    } else if (!isMatch) {
-        console.log("Wrong Password");
-    } else if (isMatch) {
-        console.log("Passwords do not match");
-    }
-    return res.redirect('profile');
-});
-
 app.get('/logout', function(req, res) {
     req.session.destroy((err) => {
         if (err) throw err;
@@ -380,14 +404,13 @@ app.get('/about', function(req, res) {
     res.render('aboutus');
 });
 
-// SEARCH STUFF
 app.post('/search', function(req, res) {
 
     searchQuery = req.body.search_query
     console.log(searchQuery);
 
     PostsModel.find({
-        $or: [{ username: new RegExp(searchQuery, 'i') }, { food_name: { $regex: new RegExp(searchQuery, 'i') } }, { restaurant_name: { $regex: req.body.search_query } }]
+        $or: [{ username: new RegExp(searchQuery, 'i') }, { food_name: { $regex: new RegExp(searchQuery, 'i') } }, { restaurant_name: { $regex: new RegExp(searchQuery, 'i') } }]
     }, (err, searchResults) => {
         if (err) {
             console.log(err);

@@ -9,7 +9,7 @@ const postsSchema = {
         min: 8,
         max: 16
     },
-    user_image:{
+    user_image: {
         type: String
     },
     user_id: {
@@ -46,15 +46,13 @@ const postsSchema = {
         min: 1,
         required: true
     },
-    likes: {
+    likeCount: {
         type: Number,
         required: false,
         default: 0
     },
-    dislikes: {
-        type: Number,
-        required: false,
-        default: 0
+    likes: {
+        type: []
     },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,

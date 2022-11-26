@@ -13,9 +13,11 @@
 
     <script type="text/javascript" src="../script.js"></script>
     <!-- Bootstrap CSS -->
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../public/css/view.css">
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="images/logo/logo2.png" type="image/icon type">
@@ -25,10 +27,9 @@
 </head>
 
 <body>
-
-    <div class="container-xxl">
-        <!--HEADER-->
-        <%- include('partials/header.ejs') %>
+    <%- include('partials/header.ejs') %>
+        <div class="container-fluid">
+            <!--HEADER-->
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -65,8 +66,7 @@
                                 </div>
                             </div>
                             <div id="i-box">
-                                <%# just add description here %>
-                                    <%= UserModel.Bio %>
+                                <%= UserModel.Bio %>
                             </div>
                         </div>
 
@@ -89,62 +89,55 @@
 
                             </div>
                         </div>
+                        <% posts.forEach(function (posts) {   %>
+                            <div class="container">
+                                <div class="row mt-5 mb-5">
+                                    <div class="col">
+                                        <div class="card" style="width: 100%;">
+                                            <div class="card-header" id="card-header">
+                                                <div class="header-account">
+                                                    <a href="view.html"><img src="/images/profile/<%= posts.user_image %>" alt="defaultDP" class="rounded-circle img-DP large-dp d-inline-block" style="height : 50px; width: 50px;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
 
-                        <div class="container">
-                            <!-- ADD FUNCTION FOR OWN POSTS -->
-
-                            <!--POST 1-->
-                            <!-- <div class="row mt-5 mb-5">
-                                <div class="col">
-                                    <div class="card" style="width: 100%;">
-                                        <div class="card-header" id="card-header">
-                                            <div class="header-account">
-                                                <a href="view.html"><img src="images/aboutus/Coloma.jpg" alt="defaultDP" class="rounded-circle img-DP large-dp d-inline-block" style="height : 50px; width: 50px;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
-
-                                                <h5 class="username-mainheader d-inline-block">lgc.gabby</h5>
-                                                <div class="info-header">
-                                                    <h6 id="date">September 10, 2021</h6>
+                                                    <h5 class="username-mainheader d-inline-block">
+                                                        <%= posts.username %>
+                                                    </h5>
+                                                    <div class="info-header">
+                                                        <h6 id="date">
+                                                            <%= posts.date.toLocaleDateString() %>
+                                                        </h6>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <a href="post-1.html" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="images/carousel/carousel_1.jpg" alt="Card image cap"></a>
-                                        <div class="card-body" id="card-body-home">
-                                            <a href="post-1.html">
-                                                <h5 class="card-title" data-bs-placement="left" title="View Post">Pho Hoa</h5>
-                                            </a>
-                                            <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">Pho - Vegetable Noodle Soup</h6>
-                                            <div class="stars">
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
-                                            </div>
-                                            <p class="card-text" style="margin-top: 10px;">This is my first time having Pho. First thing I liked about Pho was the soup. It was light on the stomach and the broth was tasty.The noodles were thin and wide, and soaked up the soup which also made it very
-                                                tasty. Overall, my first impression of Pho is good.</p>
-                                            <iconify-icon icon="ant-design:like-outlined" width="25" height="25" class="like-icon"></iconify-icon>
-                                            <small class="text-muted">12</small>
-                                        </div>
-                                        <div class="card-footer">
-
-                                            <small class="text-muted">1 comment</small>
-                                            <hr>
-                                            <div class="comment-footer">
-                                                <h6 class="username-footer" id="username"><a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">eric.adren</a></h6>
-                                                <h6 id="comment">I quite liked the taste of Pho as well. But I wasnt a fan of the smell.</h6>
+                                            <a href="/review/view/<%= posts._id %>" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="/images/posts/<%= posts.image_post %>" alt="Card image cap"></a>
+                                            <div class="card-body" id="card-body-home">
+                                                <a href="/review/view/<%= posts._id %>">
+                                                    <h5 class="card-title" data-bs-placement="left" title="View Post">
+                                                        <%= posts.restaurant_name %>
+                                                    </h5>
+                                                </a>
+                                                <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">
+                                                    <%= posts.food_name %>
+                                                </h6>
+                                                <div class="body-rating">
+                                                    <p class="card-text float-right font-weight-bold">
+                                                        Rating:
+                                                        <%= posts.rating %>/10
+                                                    </p>
+                                                </div>
+                                                <p class="card-text" style="margin-top: 10px;">
+                                                    <%= posts.review %>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
-                            
-                        </div>
+                            <%});%>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
-
-                            <!-- Pop Up Modal for Friends List
+            <!-- Pop Up Modal for Friends List
             <div class="modal fade" id="friend-list">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -177,165 +170,163 @@
 
 
 
-                            <!-- Pop Up Modal for Edit Profile-->
-                            <div class="modal fade" id="edit-profile">
-                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Edit Profile</h5>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-                                            <div class="container">
-                                                <div class="row flex-lg-nowrap">
+            <!-- Pop Up Modal for Edit Profile-->
+            <div class="modal fade" id="edit-profile">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Profile</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+                            <div class="container">
+                                <div class="row flex-lg-nowrap">
 
-                                                    <div class="col">
-                                                        <div class="row">
-                                                            <div class="col mb-3">
-                                                                <div class="card">
-                                                                    <div class="card-body">
-                                                                        <div class="e-profile">
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="e-profile">
+                                                            <div class="row">
+                                                                <div class="col-12 col-sm-auto mb-3">
+                                                                    <div class="mx-auto" style="width: 140px;">
+                                                                        <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                                                                            <img class="d-flex justify-content-center align-items-center rounded" style="height: 140px; width:140px; object-fit: cover; border: 1px solid lightgray;" src="/images/profile/<%= UserModel.user_image %>" alt="Rudeus">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <form class="col" method="post" action="/profile/edit" enctype="multipart/form-data">
+                                                                    <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                                                        <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                                                            <h5 class="pt-sm-2 pb-1 mb-0 text-nowrap">
+                                                                                <%= UserModel.firstname %>
+                                                                                    <%= UserModel.lastname %>
+                                                                            </h5>
+                                                                            <p class="mb-0">@
+                                                                                <%= UserModel.username %>
+                                                                            </p>
+
+                                                                            <div class="mt-3">
+                                                                                <label for="formFile" class="form-label">Attatch an image:</label>
+                                                                                <input class="form-control" type="file" id="formFile" name="user_image" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="tab-content pt-3">
+                                                                <div class="tab-pane active">
+                                                                    <div class="form">
+                                                                        <div class="row">
+                                                                            <!-- Change Account Details Form-->
                                                                             <div class="row">
-                                                                                <div class="col-12 col-sm-auto mb-3">
-                                                                                    <div class="mx-auto" style="width: 140px;">
-                                                                                        <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                                                                                            <img class="d-flex justify-content-center align-items-center rounded" style="height: 140px; width:140px; object-fit: cover; border: 1px solid lightgray;" src="/images/profile/<%= UserModel.user_image %>" alt="Rudeus">
-                                                                                        </div>
+                                                                                <div class="col">
+                                                                                    <input type="hidden" value="<%= UserModel.id %>" name="id">
+                                                                                    <div class="form-group">
+                                                                                        <label>First Name</label>
+                                                                                        <input class="form-control" type="text" placeholder="<%= UserModel.firstname %>" value="<%= UserModel.firstname %>" name="firstname">
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                                                                    <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                                                        <h5 class="pt-sm-2 pb-1 mb-0 text-nowrap">
-                                                                                            <%= UserModel.firstname %>
-                                                                                                <%= UserModel.lastname %>
-                                                                                        </h5>
-                                                                                        <p class="mb-0">@
-                                                                                            <%= UserModel.username %>
-                                                                                        </p>
-
-                                                                                        <div class="mt-2">
-                                                                                            <button class="btn btn-primary" type="button">
-                              <i class="fa fa-fw fa-camera"></i>
-                              <span>Change Photo</span>
-                            </button>
-                                                                                        </div>
+                                                                                <div class="col">
+                                                                                    <div class="form-group">
+                                                                                        <label>Last Name</label>
+                                                                                        <input class="form-control" type="text" placeholder="<%= UserModel.lastname %>" value="<%= UserModel.lastname %>" name="lastname">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <div class="form-group">
+                                                                                        <label>Username</label>
+                                                                                        <input class="form-control" type="text" placeholder="<%= UserModel.username %>" value="<%= UserModel.username %>" name="username">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="tab-content pt-3">
-                                                                                <div class="tab-pane active">
-                                                                                    <div class="form">
-                                                                                        <div class="row">
-                                                                                            <form class="col" method="post" action="/profile/edit" enctype="multipart/form-data">
-                                                                                                <!-- Change Account Details Form-->
-                                                                                                <div class="row">
-                                                                                                    <div class="col">
-                                                                                                        <input type="hidden" value="<%= UserModel.id %>" name="id">
-                                                                                                        <div class="form-group">
-                                                                                                            <label>First Name</label>
-                                                                                                            <input class="form-control" type="text" placeholder="<%= UserModel.firstname %>" value="<%= UserModel.firstname %>" name="firstname">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col">
-                                                                                                        <div class="form-group">
-                                                                                                            <label>Last Name</label>
-                                                                                                            <input class="form-control" type="text" placeholder="<%= UserModel.lastname %>" value="<%= UserModel.lastname %>" name="lastname">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col">
-                                                                                                        <div class="form-group">
-                                                                                                            <label>Username</label>
-                                                                                                            <input class="form-control" type="text" placeholder="<%= UserModel.username %>" value="<%= UserModel.username %>" name="username">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="col">
-                                                                                                        <div class="form-group">
-                                                                                                            <label>Email</label>
-                                                                                                            <input class="form-control" type="text" placeholder="<%= UserModel.email %>" value="<%= UserModel.email %>" name="email">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="col mb-3">
-                                                                                                        <div class="form-group">
-                                                                                                            <label>About</label>
-                                                                                                            <textarea class="form-control" rows="5" placeholder="My Bio" name="bio"></textarea>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <input class="full-width btn btn-success" type="submit" id="login-submit" value="Change Details">
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </div><br><br>
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <div class="form-group">
+                                                                                        <label>Email</label>
+                                                                                        <input class="form-control" type="text" placeholder="<%= UserModel.email %>" value="<%= UserModel.email %>" name="email">
                                                                                     </div>
-                                                                                    <hr>
-                                                                                    <div class="form">
-                                                                                        <div class="row">
-                                                                                            <div class="col-12 col-sm-6 mb-3">
-                                                                                                <div class="mb-3">
-                                                                                                    <h5>Change Password</h5>
-                                                                                                </div>
-                                                                                                <br>
-                                                                                                <form method="post" action="/profile/edit/password">
-                                                                                                    <!-- Change Password Form-->
-                                                                                                    <div class="row">
-                                                                                                        <input type="hidden" value="<%= UserModel.id %>" name="id">
-                                                                                                        <!-- Will be used for query later -->
-                                                                                                        <input type="text" value="<%= UserModel.password %>" name="actual_currentPW" hidden>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col mb-3">
+                                                                                    <div class="form-group">
+                                                                                        <label>About</label>
+                                                                                        <textarea class="form-control" rows="5" placeholder="My Bio" name="bio"></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input class="full-width btn btn-success" type="submit" id="login-submit" value="Change Details">
+                                                                            </div>
+                                                                            </form>
+                                                                        </div><br><br>
+                                                                    </div>
+                                                                    <hr>
+                                                                    <div class="form">
+                                                                        <div class="row">
+                                                                            <div class="col-12 col-sm-6 mb-3">
+                                                                                <div class="mb-3">
+                                                                                    <h5>Change Password</h5>
+                                                                                </div>
+                                                                                <br>
+                                                                                <form method="post" action="/profile/edit/password">
+                                                                                    <!-- Change Password Form-->
+                                                                                    <div class="row">
+                                                                                        <input type="hidden" value="<%= UserModel.id %>" name="id">
+                                                                                        <!-- Will be used for query later -->
+                                                                                        <input type="text" value="<%= UserModel.password %>" name="actual_currentPW" hidden>
 
-                                                                                                        <div class="col">
-                                                                                                            <div class="form-group">
-                                                                                                                <label>Current Password</label>
-                                                                                                                <input class="form-control" type="password" placeholder="••••••••" name="current_password">
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="row">
-                                                                                                        <div class="col">
-                                                                                                            <div class="form-group">
-                                                                                                                <label>New Password</label>
-                                                                                                                <input class="form-control" type="password" name="new_password">
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="row">
-                                                                                                        <div class="col">
-                                                                                                            <div class="form-group">
-                                                                                                                <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                                                                                                <input class="form-control" type="password" name="confirm_password">
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div id="message"></div>
-                                                                                                    <input class="full-width btn btn-success" type="submit" id="login-submit" value="Change Password">
-                                                                                                </form>
+                                                                                        <div class="col">
+                                                                                            <div class="form-group">
+                                                                                                <label>Current Password</label>
+                                                                                                <input class="form-control" type="password" placeholder="••••••••" name="current_password">
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            <div class="form-group">
+                                                                                                <label>New Password</label>
+                                                                                                <input class="form-control" type="password" name="new_password">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            <div class="form-group">
+                                                                                                <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
+                                                                                                <input class="form-control" type="password" name="confirm_password">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div id="message"></div>
+                                                                                    <input class="full-width btn btn-success" type="submit" id="login-submit" value="Change Password">
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-primary d-inline-block" type="submit">Done</button>
-                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary d-inline-block" type="submit">Done</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                            <script src="server.js"></script>
+            <script src="server.js"></script>
 </body>
 
 </html>

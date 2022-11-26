@@ -32,9 +32,9 @@
         <div class="container mt-5">
             <div class="mb-3">
                 <div class="header-viewpost">
-                    <a href="view.html"><img src="images/aboutus/Coloma.jpg" alt="defaultDP" class="img-DP viewpost-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
+                    <a href="view.html" class="disabled"><img src="/images/profile/<%= posts.user_image %>" alt="defaultDP" class="img-DP viewpost-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
                     <h6 class="username-viewpost">
-                        <a href="view.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">
+                        <a href="view.html" class="disabled" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">
                             <%= posts.username %>
                         </a>
                     </h6>
@@ -43,6 +43,14 @@
             <hr class="hr-line">
             <div class="mb-1">
                 <label for="restaurant" class="form-label"><h2 class="form-heading"><%= posts.restaurant_name %></h2></label>
+                <div class="reactions">
+                    <div class="likes">
+                        <form action="/review/view/<%= posts._id %>/like" method="post">
+                            <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/up.png"></button>
+                        </form>
+                    </div>
+                    <small class="text-muted" id="likes-text"><%= posts.likeCount %></small>
+                </div>
             </div>
 
             <div class="mb-1">
@@ -50,7 +58,7 @@
             </div>
 
             <div class="mb-1">
-                <label for="date" class="form-label card-subtitle"><h6><%= posts.date %></h6></label>
+                <label for="date" class="form-label card-subtitle"><h6><%= posts.date.toLocaleDateString() %></h6></label>
             </div>
 
             <div class="mb-3">
@@ -85,18 +93,26 @@
                 </div>
             </form>
             <% comments.forEach(function (comments) {   %>
-            <!-- View comments -->
-            <div class="mb-5">
-                <div class="comment-viewpost">
-                    <div class="picuser">
-                        <h2 class="username-viewpost" id="username"><a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"><%= comments.username %></a></h2>
+                <!-- View comments -->
+                <div class="">
+                    <div class="comment-viewpost">
+                        <div class="picuser">
+                            <h2 class="username-viewpost" id="username">
+                                <a href="profile-2.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">
+                                    <%= comments.username %>
+                                </a>
+                            </h2>
+
+                        </div>
+                        <p style="margin-left: 12px">
+                            <%= comments.comment %>
+                        </p>
+                    </div>
+                </div>
+                <%});%>
+                    <div class="mb-5">
 
                     </div>
-                    <p style="margin-left: 12px"><%= comments.comment %></p>
-                </div>
-            </div>
-            <%});%>
-
         </div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -12,6 +12,11 @@ a {
     color: white;
 }
 
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
 .home-heading a {
     color: white;
 }
@@ -528,8 +533,7 @@ hr.style-one {
     float: right;
 }
 
-.likes {
-}
+.likes {}
 
 #like-button {
     border: none;
@@ -546,10 +550,12 @@ hr.style-one {
     width: 35px;
 }
 
-#btn-roll1{
+#btn-roll1 {
     padding: 0;
+    background: none;
+    border: none;
 }
 
-#btn-roll2{
+#btn-roll2 {
     padding: 0;
 }
