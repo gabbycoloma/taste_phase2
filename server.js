@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs');
 
 const app = express();
 
-const mongoURI = "mongodb://localhost:27017/taste";
+const mongoURI = "mongodb://0.0.0.0:27017/taste";
 
 app.use(express.static("public"));
 app.use(express.static(__dirname));
@@ -22,7 +22,7 @@ app.use(fileUpload());
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-mongoose.connect("mongodb://localhost:27017/taste", {
+mongoose.connect("mongodb://0.0.0.0:27017/taste", {
         useNewUrlParser: true,
     })
     .then((res) => {
@@ -81,17 +81,19 @@ app.get('/', isAuth, async(req, res) => {
 });
 
 app.get('/review/view/:posts_id', function(req, res) {
-    const posts_id = req.params.posts_id; //request the userId of the edited ID num
+     //request the userId of the edited ID num
+     try{
+    PostsModel.findOne({ _id: req.params.posts_id }, function(err, result) {
+        posts=result;
+     });
+     CommentsModel.find({ posts: req.params.posts_id }, function(err, result) {
+        comments=result;
+     });
 
-    PostsModel.find({ _id: posts_id }, function(err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("viewreview", { PostsModel: result[0] }); // returns the userId found 
-        }
-    });
-
-
+ res.render("viewreview", { posts, comments });
+}catch(err){
+    console.log(err)
+}
 });
 
 app.post('/review/view/:posts_id/comment', async(req, res) => {
@@ -114,7 +116,7 @@ app.post('/review/view/:posts_id/comment', async(req, res) => {
         if (err) {
             console.log(err)
         } else {
-            res.redirect('/');
+            res.redirect('/review/view/'+ posts_id);
             console.log("Updated Docs : ", docs);
             console.log("added to db");
         }
@@ -306,20 +308,9 @@ app.post('/signup', async(req, res) => {
 
 });
 
-<<<<<<< Updated upstream
 
 // CHANGE ONLY USER DETAILS NOT PASSWORD
 app.post('/change-user-details', function(req, res) {
-=======
-app.post('/profile/edit', function(req, res) {
-    // console.log(req.files);
-    // console.log("added to db");
-    // // Get the file that was set to our field named "image_post"
-    // const { image_post } = req.files;
-
-    // // If no image submitted, exit
-    // if (!image_post) return res.sendStatus(400);
->>>>>>> Stashed changes
 
     // image_post.mv(__dirname + '/images/posts/' + image_post.name);
     const firstName = req.body.firstname;
@@ -337,25 +328,14 @@ app.post('/profile/edit', function(req, res) {
         if (err) {
             console.log(err);
         } else {
-<<<<<<< Updated upstream
             console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
             res.redirect('profile');
-=======
-            req.session.username = userName;
-
-            console.log("Session username: " + req.session.username + firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
-            res.redirect('back');
->>>>>>> Stashed changes
         }
     });
 });
 
 //CHANGE PASSWORD OF USER
-<<<<<<< Updated upstream
 app.post('/change-user-password', async function(req, res) {
-=======
-app.post('/profile/edit/password', async function(req, res) {
->>>>>>> Stashed changes
 
     const actualCurrentPassword = req.body.actual_currentPW;
     const currentPassword = req.body.current_password;
@@ -385,22 +365,7 @@ app.post('/profile/edit/password', async function(req, res) {
     } else if (isMatch) {
         console.log("Passwords do not match");
     }
-<<<<<<< Updated upstream
     return res.redirect('profile');
-=======
-    return res.redirect('back');
-
-    // console.log(password); //BEFORE
-
-    // UserModel.updateOne(query, {username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio}, function(err, result){
-    //     if(err){
-    //         console.log(err);
-    //     } else {
-    //         console.log(firstName + " " + lastName + " " + userName + " " + email + " " + bio); //AFTER
-    //         res.redirect('profile');
-    //     }
-    // });
->>>>>>> Stashed changes
 });
 
 app.get('/logout', function(req, res) {
