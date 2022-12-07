@@ -42,27 +42,27 @@
                 <form class="form" method="post" action="/signup">
                     <p class="fieldset">
                         <label class="sr-only" for="firstname ">First Name</label>
-                        <input class="w-100 col-sm-5 has-padding has-border d-inline-block mr-5" name="firstname" id="firstname" type="text" placeholder="First Name">
+                        <input class="w-100 col-sm-5 has-padding has-border d-inline-block mr-5" name="firstname" id="firstname" type="text" placeholder="First Name" required>
                         <span class="error-message ">Your username can only contain numeric and alphabetic symbols!</span>
 
                         <label class="sr-only" for="lastname">Last Name</label>
-                        <input class="w-100 col-sm-5 has-padding has-border d-inline-block ml-4" name="lastname" id="lastname" type="text " placeholder="Last Name">
+                        <input class="w-100 col-sm-5 has-padding has-border d-inline-block ml-4" name="lastname" id="lastname" type="text " placeholder="Last Name" required>
                         <span class="error-message ">Your username can only contain numeric and alphabetic symbols!</span>
                     </p>
                     <p class="fieldset">
                         <label class="image-replace username" for="username ">Username</label>
-                        <input class="full-width has-padding has-border " name="username" id="username" type="text" placeholder="Username ">
+                        <input class="full-width has-padding has-border " name="username" id="username" type="text" placeholder="Username " required>
                         <span class="error-message ">Your username can only contain numeric and alphabetic symbols!</span>
                     </p>
 
                     <p class="fieldset">
                         <label class="image-replace email" for="email">E-mail</label>
-                        <input class="full-width has-padding has-border" name="email" id="email" type="email" placeholder="E-mail">
+                        <input class="full-width has-padding has-border" name="email" id="email" type="email" placeholder="E-mail" required>
                     </p>
 
                     <p class="fieldset">
                         <label class="image-replace password" for="password">Password</label>
-                        <input class="full-width has-padding has-border" name="password" id="password" type="password" placeholder="Password">
+                        <input class="full-width has-padding has-border" name="password" id="password" type="password" placeholder="Password" required>
                         <a href="#" class="hide-password">Show</a>
                         <span class="error-message ">Your password has to be at least 6 characters long!</span>
                     </p>
