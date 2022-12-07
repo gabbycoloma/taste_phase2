@@ -86,12 +86,33 @@
                                 </p>
                                 <div class="reactions">
                                     <form action="/review/view/<%= posts._id %>/like" method="post">
-                                        <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/upvote.png"></button>
+                                       
+                                        <% if (posts.likeCount > 0 ) { %>
+                                            <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/upvote.png"></button>
+                                            
+                                      <% } %>
+                                      <% if ( posts.likeCount  == 0 ) { %>
+                                        <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/up.png"></button>
+                                      
+                                  <% } %>
+                                  <% if ( posts.likeCount  <0 ) { %>
+                                    <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/up.png"></button>
+                                    
+                                  <% } %>
                                     </form>
                                     <small class="text-muted" id="likes-text"><%= posts.likeCount %></small>
                                     <form action="/review/view/<%= posts._id %>/dislike" method="post">
-                                        <button type="submit" class="btn btn-sm" id="btn-roll2"><img id="img1" width="25" height="25" src="/images/view/downvote.png"></button>
-                                    </form>
+                                        <% if (posts.likeCount > 0 ) { %>
+                                           <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/down.png"></button>
+                                      <% } %>
+                                      <% if ( posts.likeCount  == 0 ) { %>
+                                        <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/down.png"></button>
+                                  
+                                  <% } %>
+                                  <% if ( posts.likeCount  <0 ) { %>
+                                   <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/downvote.png"></button>
+                              
+                                  <% } %></form>
                                 </div>
                             </div>
 
