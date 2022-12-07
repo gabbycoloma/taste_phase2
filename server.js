@@ -74,13 +74,7 @@ app.get('/', isAuth, async(req, res) => {
     })
 
     res.render("index", { posts: posts })
-        // PostsModel.find({}, function(err, rows) {
-        //     if (err) {
-        //         console.log(err);
-        //     } else {
-        //         res.render("index", { PostsModel: rows });
-        //     }
-        // });
+
 });
 
 app.get('/review/view/:posts_id', async(req, res) => {
@@ -99,7 +93,7 @@ app.post('/review/view/:posts_id/like', async(req, res) => {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num
 
     await PostsModel.updateOne({
-        _id:  posts_id, 
+        _id: posts_id,
         likes: { $ne: posts_id }
     }, {
         $inc: { likeCount: 1 },
@@ -113,7 +107,7 @@ app.post('/review/view/:posts_id/dislike', async(req, res) => {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num
 
     await PostsModel.updateOne({
-        _id:  posts_id, 
+        _id: posts_id,
         likes: { $ne: posts_id }
     }, {
         $inc: { likeCount: -1 },
@@ -275,50 +269,64 @@ app.get('/profile', async function(req, res) {
 app.post('/profile/edit', async(req, res) => {
     var initialUsername = req.session.username;
     var initialImage = req.session.user_image;
-    console.log(req.files);
     console.log("added to db");
     // Get the file that was set to our field named "user_image"
-    var { user_image } = req.files;
+
 
     // If no image submitted, exit
-    if (!user_image) return res.sendStatus(400);
 
-    user_image.mv(__dirname + '/images/profile/' + user_image.name);
+
     const firstName = req.body.firstname;
     const lastName = req.body.lastname;
     const userName = req.body.username;
     const email = req.body.email;
     const bio = req.body.bio;
-    user_image = user_image.name;
+
     const userID = req.body.id;
     const query = { _id: userID };
-
-    // Username Validation
-    const takenUsername = await UserModel.findOne({username: userName });
-    if(takenUsername) {
-        console.log("Username already taken");
-        return res.redirect('back');
-    }
-
-    // Email Validation
-    const takenEmail = await UserModel.findOne({email: email });
-    if(takenEmail) {
-        console.log("Email already taken");
-        return res.redirect('back');
-    }
-
     console.log("Initial username: " + initialUsername + "            Username Changed: " + userName + "            Image: " + user_image);
     await PostsModel.updateMany({ username: initialUsername }, { $set: { username: userName, user_image: user_image } });
     await CommentsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
-    UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio, user_image: user_image }, function(err, result) {
+    UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio }, function(err, result) {
         if (err) {
             console.log(err);
         } else {
             req.session.username = userName;
-            req.session.user_image = user_image;
+            req.session.firstname = firstName;
+            req.session.lastname = lastName;
             res.redirect('back');
         }
     });
+});
+
+app.post('/profile/edit/image', async function(req, res) {
+    var initialUsername = req.session.username;
+    var initialImage = req.session.user_image;
+    console.log(req.files);
+    console.log("added to db");
+    // Get the file that was set to our field named "user_image"
+    // If no image submitted, exit
+    var { user_image } = req.files;
+    if (!user_image) return res.sendStatus(400);
+
+    user_image.mv(__dirname + '/images/profile/' + user_image.name);
+
+    user_image = user_image.name;
+    const userID = req.body.id;
+    const query = { _id: userID };
+
+
+
+    UserModel.updateOne(query, { user_image: user_image }, async function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            req.session.user_image = user_image;
+            await PostsModel.updateMany({ username: initialUsername }, { $set: { user_image: user_image } });
+            res.redirect('back');
+        }
+    });
+
 });
 
 //CHANGE PASSWORD OF USER

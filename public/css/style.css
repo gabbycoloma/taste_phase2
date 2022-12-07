@@ -559,3 +559,26 @@ hr.style-one {
 #btn-roll2 {
     padding: 0;
 }
+
+li {
+    list-style-position: inside;
+    content: "";
+}
+
+ul {
+    padding: 0;
+    align-items: center;
+}
+
+.packages {
+    max-width: 45%;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#title-package {
+    text-align: center;
+}
