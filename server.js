@@ -292,6 +292,21 @@ app.post('/profile/edit', async(req, res) => {
     user_image = user_image.name;
     const userID = req.body.id;
     const query = { _id: userID };
+
+    // Username Validation
+    const takenUsername = await UserModel.findOne({username: userName });
+    if(takenUsername) {
+        console.log("Username already taken");
+        return res.redirect('back');
+    }
+
+    // Email Validation
+    const takenEmail = await UserModel.findOne({email: email });
+    if(takenEmail) {
+        console.log("Email already taken");
+        return res.redirect('back');
+    }
+
     console.log("Initial username: " + initialUsername + "            Username Changed: " + userName + "            Image: " + user_image);
     await PostsModel.updateMany({ username: initialUsername }, { $set: { username: userName, user_image: user_image } });
     await CommentsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
