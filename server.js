@@ -268,7 +268,6 @@ app.get('/profile', async function(req, res) {
 
 app.post('/profile/edit', async(req, res) => {
     var initialUsername = req.session.username;
-    var initialImage = req.session.user_image;
     console.log("added to db");
     // Get the file that was set to our field named "user_image"
 
@@ -284,8 +283,24 @@ app.post('/profile/edit', async(req, res) => {
 
     const userID = req.body.id;
     const query = { _id: userID };
-    console.log("Initial username: " + initialUsername + "            Username Changed: " + userName + "            Image: " + user_image);
-    await PostsModel.updateMany({ username: initialUsername }, { $set: { username: userName, user_image: user_image } });
+
+    // Username Validation
+    const takenUsername = await UserModel.findOne({username: userName });
+    if(takenUsername) {
+        console.log("Username already taken");
+        return res.redirect('back');
+    }
+
+    // Email Validation
+    const takenEmail = await UserModel.findOne({email: email });
+    if(takenEmail && !(takenEmail.username == req.session.username)) {
+        console.log(takenEmail.username);
+        console.log("Email already taken");
+        return res.redirect('back');
+    }
+    
+    console.log("Initial username: " + initialUsername + "            Username Changed: " + userName );
+    await PostsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
     await CommentsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
     UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio }, function(err, result) {
         if (err) {
