@@ -7,6 +7,8 @@ const fileUpload = require('express-fileupload');
 const session = require('express-session');
 const MongoDBsession = require('connect-mongodb-session')(session);
 const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
 
 const app = express();
 
@@ -19,7 +21,8 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(express.json());
-
+app.use(cookieParser('NotSoSecret'));
+app.use(flash());
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -66,6 +69,7 @@ const CommentsModel = require('./models/CommentsDB');
 // const reviewRoute = require("./routes/Review");
 const { post } = require('./routes/Review');
 const { init } = require('./models/PostsDB');
+const { request } = require('express');
 // app.use('/review', reviewRoute);
 
 app.get('/', isAuth, async(req, res) => {
@@ -91,10 +95,10 @@ app.get('/review/view/:posts_id', async(req, res) => {
 
 app.post('/review/view/:posts_id/like', async(req, res) => {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num
- 
+
     await PostsModel.updateOne({
-        "_id": posts_id, 
-        "likes": { "$ne":  req.session._id }
+        "_id": posts_id,
+        "likes": { "$ne": req.session._id }
     }, {
         $inc: { likeCount: 1 },
         $push: { likes: req.session._id },
@@ -108,8 +112,8 @@ app.post('/review/view/:posts_id/dislike', async(req, res) => {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num
 
     await PostsModel.updateOne({
-        "_id": posts_id, 
-        "dislikes": { "$ne":  req.session._id }
+        "_id": posts_id,
+        "dislikes": { "$ne": req.session._id }
     }, {
         $inc: { likeCount: -1 },
         $push: { dislikes: req.session._id },
@@ -287,21 +291,21 @@ app.post('/profile/edit', async(req, res) => {
     const query = { _id: userID };
 
     // Username Validation
-    const takenUsername = await UserModel.findOne({username: userName });
-    if(takenUsername) {
+    const takenUsername = await UserModel.findOne({ username: userName });
+    if (takenUsername) {
         console.log("Username already taken");
         return res.redirect('back');
     }
 
     // Email Validation
-    const takenEmail = await UserModel.findOne({email: email });
-    if(takenEmail && !(takenEmail.username == req.session.username)) {
+    const takenEmail = await UserModel.findOne({ email: email });
+    if (takenEmail && !(takenEmail.username == req.session.username)) {
         console.log(takenEmail.username);
         console.log("Email already taken");
         return res.redirect('back');
     }
-    
-    console.log("Initial username: " + initialUsername + "            Username Changed: " + userName );
+
+    console.log("Initial username: " + initialUsername + "            Username Changed: " + userName);
     await PostsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
     await CommentsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
     UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio }, function(err, result) {
@@ -395,17 +399,21 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/login', async(req, res) => {
+
     const { email, password } = req.body;
 
     let users = await UserModel.findOne({ email });
 
     if (!users) {
+        console.log("The email is not yet registered")
+
         return res.redirect("/login");
     }
 
     const isMatch = await bcrypt.compare(password, users.password);
 
     if (!isMatch) {
+        console.log("Passwords is incorrect! Try again")
         return res.redirect("/login");
     }
 
@@ -430,8 +438,23 @@ app.post('/signup', async(req, res) => {
 
     let users = await UserModel.findOne({ email });
 
+    const takenUsername = await UserModel.findOne({ username: username });
+
+    // Email and Username Validation
+    if (users && takenUsername) {
+        console.log("Email and username already taken");
+        return res.redirect('back')
+
+    }
     if (users) {
+        console.log("Email already taken");
         return res.redirect('/signup')
+
+    }
+    if (takenUsername) {
+        console.log("Username already taken");
+        console.log(takenUsername.username);
+        return res.redirect('back');
     }
 
     const salt = bcrypt.genSaltSync(10);
