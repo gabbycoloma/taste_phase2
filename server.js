@@ -24,12 +24,23 @@ app.use(express.json());
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-mongoose.connect("mongodb://0.0.0.0:27017/taste", {
+// mongoose.connect("mongodb://0.0.0.0:27017/taste", {
+//         useNewUrlParser: true,
+//     })
+//     .then((res) => {
+//         console.log('DB is connected');
+//     });
+
+//Online database connection
+mongoose.connect("mongodb+srv://taste:rKkGSdkg4sjJ8tx6@cluster0.bupd19r.mongodb.net/taste", {
         useNewUrlParser: true,
     })
     .then((res) => {
         console.log('DB is connected');
     });
+
+
+
 
 const store = new MongoDBsession({
     uri: mongoURI,
@@ -285,21 +296,21 @@ app.post('/profile/edit', async(req, res) => {
     const query = { _id: userID };
 
     // Username Validation
-    const takenUsername = await UserModel.findOne({username: userName });
-    if(takenUsername) {
+    const takenUsername = await UserModel.findOne({ username: userName });
+    if (takenUsername) {
         console.log("Username already taken");
         return res.redirect('back');
     }
 
     // Email Validation
-    const takenEmail = await UserModel.findOne({email: email });
-    if(takenEmail && !(takenEmail.username == req.session.username)) {
+    const takenEmail = await UserModel.findOne({ email: email });
+    if (takenEmail && !(takenEmail.username == req.session.username)) {
         console.log(takenEmail.username);
         console.log("Email already taken");
         return res.redirect('back');
     }
-    
-    console.log("Initial username: " + initialUsername + "            Username Changed: " + userName );
+
+    console.log("Initial username: " + initialUsername + "            Username Changed: " + userName);
     await PostsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
     await CommentsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
     UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio }, function(err, result) {
