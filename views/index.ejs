@@ -28,18 +28,22 @@
     <form action="/"></form>
     <!--HEADER-->
     <%- include('./partials/header.ejs') %>
-        <div class="container">
 
+
+
+
+
+        <div class="container">
             <% posts.forEach(function (posts) {   %>
                 <div class="row mt-5 mb-5">
                     <div class="col">
                         <div class="card" style="width: 40rem;">
                             <div class="card-header" id="card-header">
                                 <div class="header-account">
-                                    <a href="/profile" class="disabled"><img src="/images/profile/<%= posts.user_image %>" alt="defaultDP" class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
+                                    <a href="/profile/<%= posts.username %>" class="disabled"><img src="/images/profile/<%= posts.user_image %>" alt="defaultDP" class="img-DP large-dp" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
                                     <div class="info-header">
                                         <h6 class="username-mainheader">
-                                            <a href="/profile" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile" class="disabled">
+                                            <a href="/profile/<%= posts.username %>" class="disabled" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile">
                                                 <%= posts.username %>
                                             </a>
                                         </h6>
@@ -86,33 +90,34 @@
                                 </p>
                                 <div class="reactions">
                                     <form action="/review/view/<%= posts._id %>/like" method="post">
-                                       
+
                                         <% if (posts.likeCount > 0 ) { %>
                                             <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/upvote.png"></button>
-                                            
-                                      <% } %>
-                                      <% if ( posts.likeCount  == 0 ) { %>
-                                        <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/up.png"></button>
-                                      
-                                  <% } %>
-                                  <% if ( posts.likeCount  <0 ) { %>
-                                    <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/up.png"></button>
-                                    
-                                  <% } %>
+
+                                            <% } %>
+                                                <% if ( posts.likeCount  == 0 ) { %>
+                                                    <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/up.png"></button>
+
+                                                    <% } %>
+                                                        <% if ( posts.likeCount  <0 ) { %>
+                                                            <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/up.png"></button>
+
+                                                            <% } %>
                                     </form>
                                     <small class="text-muted" id="likes-text"><%= posts.likeCount %></small>
                                     <form action="/review/view/<%= posts._id %>/dislike" method="post">
                                         <% if (posts.likeCount > 0 ) { %>
-                                           <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/down.png"></button>
-                                      <% } %>
-                                      <% if ( posts.likeCount  == 0 ) { %>
-                                        <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/down.png"></button>
-                                  
-                                  <% } %>
-                                  <% if ( posts.likeCount  <0 ) { %>
-                                   <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/downvote.png"></button>
-                              
-                                  <% } %></form>
+                                            <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/down.png"></button>
+                                            <% } %>
+                                                <% if ( posts.likeCount  == 0 ) { %>
+                                                    <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/down.png"></button>
+
+                                                    <% } %>
+                                                        <% if ( posts.likeCount  <0 ) { %>
+                                                            <button type="submit" class="btn btn-sm" id="btn-roll1"><img id="img1" width="25" height="25" src="/images/view/downvote.png"></button>
+
+                                                            <% } %>
+                                    </form>
                                 </div>
                             </div>
 

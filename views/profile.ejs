@@ -16,11 +16,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="../public/css/view.css">
+    <link rel="stylesheet" href="/public/css/view.css">
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="icon" href="images/logo/logo2.png" type="image/icon type">
+    <link rel="icon" href="/images/logo/logo2.png" type="image/icon type">
 
     <title>Taste - Profile</title>
 
@@ -36,34 +36,42 @@
             <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
 
             <div id="profile-upper">
-                <div id="profile-banner-image">
-                    <img class="upperimg" src="/images/elements/background.jpg" alt="Banner image">
-                </div>
-                <div id="profile-d">
-                    <div id="profile-pic">
-                        <img src="/images/profile/<%= UserModel.user_image %>">
-                        <%# edit image src %>
+                <% if (msg !== "") {%>
+                    <div class="alert alert-<%- type %> alert-dismissible fade show text-center" role="alert" style="margin: 0;">
+                        <strong><%- title %></strong>
+                        <%- msg %>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div id="u-name">
-                        <%= UserModel.firstname %>
-                            <%= UserModel.lastname %>
-                    </div>
-                    <div class="tb" id="m-btns">
-                        <div class="m-btn"><span data-toggle="modal" data-target="#edit-profile">Edit Profile</span> </div>
-                    </div>
-                </div>
+                    <% } %>
+                        <div id="profile-banner-image">
+                            <img class="upperimg" src="/images/elements/background.jpg" alt="Banner image">
+                        </div>
+
+                        <div id="profile-d">
+                            <div id="profile-pic">
+                                <img src="/images/profile/<%= UserModel.user_image %>">
+                            </div>
+                            <div id="u-name">
+                                <%= UserModel.firstname %>
+                                    <%= UserModel.lastname %>
+                            </div>
+                            <% if(session._id.equals(UserModel._id)){ %>
+                                <div class="tb" id="m-btns">
+                                    <div class="m-btn"><span data-toggle="modal" data-target="#edit-profile">Edit Profile</span> </div>
+                                </div>
+                                <% } %>
+                        </div>
 
             </div>
             <div id="main-content">
-                <div class="tb">
+                <div class="tb">`
                     <div class="td" id="l-col">
                         <div class="l-cnt">
                             <div class="cnt-label">
                                 <i class="l-i" id="l-i-i"></i>
                                 <span>Intro</span>
-                                <div class="lb-action">
-                                    <div id="penicon"><img src="images/view/penedit.png"></div>
-                                </div>
                             </div>
                             <div id="i-box">
                                 <%= UserModel.Bio %>
@@ -80,32 +88,23 @@
                             <div class="tb">
                                 <div class="td">
                                     <div class="tb" id="p-tabs-m">
-                                        <!-- <div class="td"><span>ABOUT</span></div> -->
                                         <div class="td active"><span>POSTS</span></div>
-                                        <!-- <div class="td"><span data-toggle="modal" data-target="#friend-list">FRIENDS</span></div> -->
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <% posts.forEach(function (posts) {   %>
                             <div class="container">
                                 <div class="row mt-5 mb-5">
-                                    <div class="col">
-                                        <div class="card" style="width: 100%;">
+                                    <div class="col d-flex justify-content-center">
+                                        <div class="card" style="width: 60%;">
                                             <div class="card-header" id="card-header">
                                                 <div class="header-account">
                                                     <a href="view.html"><img src="/images/profile/<%= posts.user_image %>" alt="defaultDP" class="rounded-circle img-DP large-dp d-inline-block" style="height : 50px; width: 50px;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Profile"></a>
 
-                                                    <h5 class="username-mainheader d-inline-block">
+                                                    <h5 class="username-mainheader d-inline-block ml-1">
                                                         <%= posts.username %>
                                                     </h5>
-                                                    <div class="info-header">
-                                                        <h6 id="date" style="margin-top: 10px;">
-                                                            <%= posts.date.toLocaleDateString() %>
-                                                        </h6>
-                                                    </div>
                                                 </div>
                                             </div>
                                             <a href="/review/view/<%= posts._id %>" data-bs-placement="bottom" title="View Post"><img class="card-img-top card-home" src="/images/posts/<%= posts.image_post %>" alt="Card image cap"></a>
@@ -115,15 +114,18 @@
                                                         <%= posts.restaurant_name %>
                                                     </h5>
                                                 </a>
-                                                <h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">
-                                                    <%= posts.food_name %>
-                                                </h6>
-                                                <div class="body-rating">
-                                                    <p class="card-text float-right font-weight-bold">
-                                                        Rating:
-                                                        <%= posts.rating %>/10
-                                                    </p>
+                                                <div class="body-header">
+                                                    <h6 class="card-subtitle text-muted" id="card-subtitle" style="margin: 0; padding: 0;">
+                                                        <%= posts.food_name %>
+                                                    </h6>
+                                                    <div class="body-rating">
+                                                        <p class="card-text float-right font-italic">
+                                                            Rating:
+                                                            <%= posts.rating %>/10
+                                                        </p>
+                                                    </div>
                                                 </div>
+
                                                 <p class="card-text" style="margin-top: 10px;">
                                                     <%= posts.review %>
                                             </div>
@@ -137,7 +139,7 @@
                 </div>
             </div>
 
-            <!-- Pop Up Modal for Edit Profile-->
+            <!-- Pop Up Modal for Edit Profile -->
             <div class="modal fade" id="edit-profile">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -224,7 +226,7 @@
                                                                                     <div class="col mb-3">
                                                                                         <div class="form-group">
                                                                                             <label>About</label>
-                                                                                            <textarea class="form-control" rows="5" placeholder="My Bio" name="bio"></textarea>
+                                                                                            <textarea class="form-control" rows="5" name="bio"><%= UserModel.Bio %> </textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -252,7 +254,7 @@
                                                                                         <div class="col">
                                                                                             <div class="form-group">
                                                                                                 <label>Current Password</label>
-                                                                                                <input class="form-control" type="password" placeholder="••••••••" name="current_password" required min="6" max="20">
+                                                                                                <input class="form-control" type="password" placeholder="••••••••" name="current_password" required minlength="3" maxlength="20">
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -260,7 +262,7 @@
                                                                                         <div class="col">
                                                                                             <div class="form-group">
                                                                                                 <label>New Password</label>
-                                                                                                <input class="form-control" type="password" name="new_password" required min="6" max="20">
+                                                                                                <input class="form-control" type="password" name="new_password" required minlength="6" maxlength="20">
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -268,7 +270,7 @@
                                                                                         <div class="col">
                                                                                             <div class="form-group">
                                                                                                 <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                                                                                <input class="form-control" type="password" name="confirm_password" required min="6" max="20">
+                                                                                                <input class="form-control" type="password" name="confirm_password" required minlength="6" maxlength="20">
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -288,9 +290,6 @@
 
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-primary d-inline-block" type="submit">Done</button>
                             </div>
                         </div>
                     </div>

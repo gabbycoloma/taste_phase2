@@ -9,10 +9,15 @@ const MongoDBsession = require('connect-mongodb-session')(session);
 const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const validator = require('express-validator');
+require('dotenv').config();
 
 const app = express();
 
+
+let pass = process.env.PASS;
 const mongoURI = "mongodb://0.0.0.0:27017/taste";
+const atlasURI = "mongodb+srv://taste:" + pass + "@cluster0.vce3wnw.mongodb.net/taste";
 
 app.use(bodyparser());
 app.use(express.static("public"));
@@ -27,7 +32,16 @@ app.use(flash());
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-mongoose.connect("mongodb://0.0.0.0:27017/taste", {
+// mongoose.connect("mongodb://0.0.0.0:27017/taste", {
+//         useNewUrlParser: true,
+//     })
+//     .then((res) => {
+//         console.log('DB is connected');
+//     });
+
+
+const atlas = "mongodb+srv://taste:lmGQmG0iUqpcCvC5@cluster0.vce3wnw.mongodb.net/taste";
+mongoose.connect(atlas, {
         useNewUrlParser: true,
     })
     .then((res) => {
@@ -35,7 +49,7 @@ mongoose.connect("mongodb://0.0.0.0:27017/taste", {
     });
 
 const store = new MongoDBsession({
-    uri: mongoURI,
+    uri: atlasURI,
     collection: 'sessions'
 })
 
@@ -43,7 +57,7 @@ app.use(session({
     secret: 'key that will sign cookie',
     resave: false, //for every request, create sesson (false)
     saveUninitialized: false,
-    store: store,
+    store: store
 }));
 
 const isAuth = (req, res, next) => {
@@ -77,7 +91,7 @@ app.get('/', isAuth, async(req, res) => {
         date: 'desc'
     })
 
-    res.render("index", { posts: posts })
+    res.render("index", { posts: posts, msg: "" })
 
 });
 
@@ -107,7 +121,7 @@ app.post('/review/view/:posts_id/like', async(req, res) => {
 
 
     res.redirect('back');
-});
+})
 app.post('/review/view/:posts_id/dislike', async(req, res) => {
     const posts_id = req.params.posts_id; //request the userId of the edited ID num
 
@@ -185,12 +199,12 @@ app.post('/review/create/add', function(req, res) {
         if (err) {
             console.log(err);
         } else {
+            req.flash('message', 'Review posted!')
             res.redirect("/");
             console.log("Updated Docs : ", docs);
             console.log("added to db");
         }
     })
-
 });
 
 app.get('/review/edit', function(req, res) {
@@ -259,26 +273,21 @@ app.get('/review/delete/:posts_id', function(req, res) {
 
 
 
-app.get('/profile', async function(req, res) {
+app.get('/profile/:posts_username', async function(req, res) {
+    const userName = req.params.posts_username; //request the userId of the edited ID num
     const posts = await PostsModel.find({ username: req.session.username });
 
+    const user = await UserModel.findOne({ username: req.session.username });
+    return res.render('profile', { UserModel: user, posts: posts, msg: "" });
 
-    UserModel.findOne({ username: req.session.username }, function(err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render('profile', { UserModel: result, posts: posts });
-        }
-    });
 });
 
 app.post('/profile/edit', async(req, res) => {
     var initialUsername = req.session.username;
-    console.log("added to db");
+
     // Get the file that was set to our field named "user_image"
-
-
-    // If no image submitted, exit
+    const posts = await PostsModel.find({ username: initialUsername });
+    const currentUser = await UserModel.findOne({ username: initialUsername });
 
 
     const firstName = req.body.firstname;
@@ -290,11 +299,18 @@ app.post('/profile/edit', async(req, res) => {
     const userID = req.body.id;
     const query = { _id: userID };
 
+
+
+
     // Username Validation
     const takenUsername = await UserModel.findOne({ username: userName });
-    if (takenUsername) {
-        console.log("Username already taken");
-        return res.redirect('back');
+    if (takenUsername == null) {
+        console.log("not null");
+    } else if (takenUsername.username != req.session.username) {
+        if (takenUsername) {
+            console.log("Username already taken");
+            return res.render("profile", { UserModel: currentUser, posts: posts, msg: "Username already taken. Try another username", title: "Error: ", type: "danger" });
+        }
     }
 
     // Email Validation
@@ -302,22 +318,25 @@ app.post('/profile/edit', async(req, res) => {
     if (takenEmail && !(takenEmail.username == req.session.username)) {
         console.log(takenEmail.username);
         console.log("Email already taken");
-        return res.redirect('back');
+        return res.render("profile", { UserModel: currentUser, posts: posts, msg: "Email is already taken. Try another email", title: "Error: ", type: "danger" });
     }
 
     console.log("Initial username: " + initialUsername + "            Username Changed: " + userName);
     await PostsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
     await CommentsModel.updateMany({ username: initialUsername }, { $set: { username: userName } });
-    UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio }, function(err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            req.session.username = userName;
-            req.session.firstname = firstName;
-            req.session.lastname = lastName;
-            res.redirect('back');
-        }
-    });
+    console.log("updated posts and comment");
+    req.session.username = userName;
+    req.session.firstname = firstName;
+    req.session.lastname = lastName;
+
+    await UserModel.updateOne(query, { username: userName, firstname: firstName, lastname: lastName, email: email, Bio: bio })
+    const ChangedPosts = await PostsModel.find({ username: userName });
+    const ChangedUser = await UserModel.findOne({ username: userName });
+
+
+    console.log("updated user");
+    console.log(ChangedUser);
+    return res.render("profile", { UserModel: ChangedUser, posts: ChangedPosts, msg: "Profile updated", title: "Success!", type: "primary" });
 });
 
 app.post('/profile/edit/image', async function(req, res) {
@@ -344,7 +363,9 @@ app.post('/profile/edit/image', async function(req, res) {
         } else {
             req.session.user_image = user_image;
             await PostsModel.updateMany({ username: initialUsername }, { $set: { user_image: user_image } });
-            res.redirect('back');
+            const ChangedPosts = await PostsModel.find({ username: initialUsername });
+            const ChangedUser = await UserModel.findOne({ query });
+            return res.render("profile", { UserModel: ChangedUser, posts: ChangedPosts, msg: "Profile picture updated", title: "Success! ", type: "primary" });
         }
     });
 
@@ -352,6 +373,9 @@ app.post('/profile/edit/image', async function(req, res) {
 
 //CHANGE PASSWORD OF USER
 app.post('/profile/edit/password', async function(req, res) {
+    var initialUsername = req.session.username;
+    const posts = await PostsModel.find({ username: initialUsername });
+    const currentUser = await UserModel.findOne({ username: initialUsername });
 
     const actualCurrentPassword = req.body.actual_currentPW;
     const currentPassword = req.body.current_password;
@@ -377,11 +401,13 @@ app.post('/profile/edit/password', async function(req, res) {
         });
 
     } else if (!isMatch) {
+        return res.render("profile", { UserModel: currentUser, posts: posts, msg: "Current password is incorrect!", title: "Cannot update password: ", type: "danger" });
         console.log("Wrong Password");
     } else if (isMatch) {
+        return res.render("profile", { UserModel: currentUser, posts: posts, msg: "Passwords do not match!", title: "Cannot update password: ", type: "danger" });
         console.log("Passwords do not match");
     }
-    return res.redirect('back');
+    return res.render("profile", { UserModel: currentUser, posts: posts, msg: "Passwords udpated!", title: "Success! ", type: "primary" });
 });
 
 
@@ -395,7 +421,7 @@ app.get('/landingpage', async function(req, res) {
 
 //Login User
 app.get('/login', function(req, res) {
-    res.render('login');
+    res.render('login', { msg: "" });
 });
 
 app.post('/login', async(req, res) => {
@@ -406,15 +432,14 @@ app.post('/login', async(req, res) => {
 
     if (!users) {
         console.log("The email is not yet registered")
-
-        return res.redirect("/login");
+        return res.render("login", { msg: "The email is not yet registered" });
     }
 
     const isMatch = await bcrypt.compare(password, users.password);
 
     if (!isMatch) {
-        console.log("Passwords is incorrect! Try again")
-        return res.redirect("/login");
+        console.log("Password is incorrect! Try again")
+        return res.render("login", { msg: "Password is incorrect! Try again" });
     }
 
     req.session.isAuth = true;
@@ -430,7 +455,7 @@ app.post('/login', async(req, res) => {
 
 //Sign Up User
 app.get('/signup', function(req, res) {
-    res.render('signup');
+    res.render('signup', { msg: "" });
 });
 
 app.post('/signup', async(req, res) => {
@@ -443,35 +468,37 @@ app.post('/signup', async(req, res) => {
     // Email and Username Validation
     if (users && takenUsername) {
         console.log("Email and username already taken");
-        return res.redirect('back')
-
+        return res.render("signup", { msg: "Email and username already taken" })
     }
     if (users) {
         console.log("Email already taken");
-        return res.redirect('/signup')
+        return res.render("signup", { msg: "Email already taken" })
 
     }
     if (takenUsername) {
         console.log("Username already taken");
         console.log(takenUsername.username);
-        return res.redirect('back');
+        return res.render("signup", { msg: "Username already taken" })
     }
 
     const salt = bcrypt.genSaltSync(10);
     const hashedPW = await bcrypt.hash(password, salt);
     console.log(hashedPW);
-    users = new UserModel({
-        firstname,
-        lastname,
-        username,
-        email,
-        password: hashedPW,
-        Bio: "The user has not added a bio yet."
-    });
-    await users.save();
 
-    res.redirect('/login');
-
+    try {
+        users = new UserModel({
+            firstname,
+            lastname,
+            username,
+            email,
+            password: hashedPW,
+            Bio: "The user has not added a bio yet."
+        });
+        await users.save();
+        res.render('/login');
+    } catch (err) {
+        return res.redirect("back")
+    }
 });
 
 app.get('/logout', function(req, res) {

@@ -898,5 +898,40 @@ button {
     color: #DC6769;
 }
 
+.body-header {
+    display: flex;
+}
+
+.body-rating {
+    margin-left: auto;
+    font-weight: 400;
+}
+
+.card-profile {
+    min-height: 400px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+.card-home {
+    min-height: 400px;
+}
+
+#date {
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+.username-mainheader a {
+    color: black;
+    font-weight: 600;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
 
 /* Content area finished */
