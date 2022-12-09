@@ -495,7 +495,7 @@ app.post('/signup', async(req, res) => {
             Bio: "The user has not added a bio yet."
         });
         await users.save();
-        res.render('/login');
+        return res.render('login', { msg: "" });
     } catch (err) {
         return res.redirect("back")
     }
