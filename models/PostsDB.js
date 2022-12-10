@@ -54,9 +54,6 @@ const postsSchema = {
     likes: {
         type: []
     },
-    dislikes: {
-        type: []
-    },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'comments'
